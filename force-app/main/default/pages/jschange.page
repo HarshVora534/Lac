@@ -1,0 +1,7 @@
+<apex:page showHeader="false" standardStylesheets="false">
+    <apex:includeScript value="{!$Resource.jsdemo}"/>
+
+    <h1>This text is displayed using JavaScript</h1>
+    
+    <button onclick="changeText()">Change Text</button>
+</apex:page>

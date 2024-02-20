@@ -1,0 +1,14 @@
+<apex:page standardController="Account" sidebar="false">
+    <apex:form style="align-items:center;justify-content:center">
+    	<apex:pageBlock >
+        	<apex:pageBlockSection >
+                <apex:inputField value="{!Account.Email__c}"></apex:inputField>
+                <div>
+                <apex:commandButton style="color:green" action="{!Save}" value="Send Reset Pass Link!!"/>
+                </div>
+                <apex:outputLink style="padding-left:100px" value="https://mvclouds92-dev-ed--c.develop.vf.force.com/apex/Account?core.apexpages.request.devconsole=1">Login</apex:outputLink>
+                <apex:outputLink style="padding-left:100px"  value="https://mvclouds92-dev-ed--c.develop.vf.force.com/apex/Accountregister?core.apexpages.request.devconsole=1">Register</apex:outputLink>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,5 @@
+<apex:page standardStylesheets="false" showHeader="false">
+    <apex:stylesheet value="{!$Resource.CssDemo}"/>
+    <h1>This text is displayed using CSS</h1>
+    <apex:iframe src="{!URLFOR($Resource.pdfdemo)}" width="100%" height="500px"/>
+</apex:page>

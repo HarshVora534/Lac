@@ -1,0 +1,23 @@
+<apex:page standardController="Account" recordSetVar="accounts">
+  <apex:pageBlock title="Viewing Accounts">
+    <apex:form id="theForm">
+      <apex:pageBlockSection >
+        <apex:dataList var="acc" value="{!accounts}" >
+          <apex:outputText value="{!acc.Name}"/><br/>
+          <apex:dataList value="{!acc.Opportunities}" var="opp">
+              <br/> 
+              Opportunity Name: {!opp.Name}
+              <br/>
+              Opportunity Amount: {!opp.Amount}
+              <br/>
+               Opportunity Close date: {!opp.Closedate}<br/>
+          </apex:dataList>
+        </apex:dataList>
+      </apex:pageBlockSection>
+      <apex:panelGrid columns="2">
+        <apex:commandLink action="{!previous}">Previous</apex:commandLink>
+        <apex:commandLink action="{!next}">Next</apex:commandLink>
+      </apex:panelGrid>
+    </apex:form> 
+  </apex:pageBlock>
+</apex:page>

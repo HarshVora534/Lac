@@ -1,0 +1,17 @@
+<apex:page standardController="Account" sidebar="false">
+    <apex:form style="align-items:center;justify-content:center">
+    	<apex:pageBlock >
+        	<apex:pageBlockSection >
+                <apex:inputField value="{!Account.name}"></apex:inputField>
+                <br/>
+                <apex:inputField value="{!Account.Phone}"></apex:inputField>
+                <br/>
+                <apex:inputField value="{!Account.Email__c}"></apex:inputField>
+                <div>
+                <apex:commandButton style="color:red" action="{!Save}" value="Register"/>
+                </div>
+                <apex:outputLink style="padding-left:100px" value="https://mvclouds92-dev-ed--c.develop.vf.force.com/apex/Account?core.apexpages.request.devconsole=1">Login</apex:outputLink>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

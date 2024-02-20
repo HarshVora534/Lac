@@ -1,0 +1,15 @@
+<apex:page standardController="Contact" recordSetvar="Contact">
+  <apex:form id="theForm">
+      <apex:pageBlock title="Viewing Accounts">
+    <apex:pageBlockSection >
+      <apex:dataList var="c" value="{!Contact}" type="1">
+        {!c.name}
+      </apex:dataList>
+    </apex:pageBlockSection>
+    <apex:panelGrid columns="2">
+      <apex:commandLink action="{!previous}">Previous</apex:commandlink>
+      <apex:commandLink action="{!next}">Next</apex:commandlink>
+    </apex:panelGrid>
+   </apex:pageBlock>
+  </apex:form> 
+</apex:page>

@@ -1,0 +1,6 @@
+<apex:page standardStylesheets="false" showHeader="false">
+
+    <h1>This text is displayed using CSS</h1>
+
+    <apex:iframe src="{!$Resource.docdemo}" width="100%" height="500px"/>
+</apex:page>

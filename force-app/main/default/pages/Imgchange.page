@@ -1,0 +1,7 @@
+<apex:page standardStylesheets="false" showHeader="false">
+    
+    <h1>This text is displayed using CSS</h1>
+    
+    <!-- Example of including an image -->
+    <apex:image url="{!$Resource.imgdemo}" alt="Your Image Alt Text"/>
+</apex:page>

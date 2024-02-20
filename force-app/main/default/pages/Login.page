@@ -1,0 +1,17 @@
+<apex:page standardController="Account" sidebar="false">
+    <apex:form style="align-items:center;justify-content:center">
+    	<apex:pageBlock >
+        	<apex:pageBlockSection >
+                <apex:inputField value="{!Account.name}"></apex:inputField>
+                <br/>
+                <apex:inputField value="{!Account.Email__c}"></apex:inputField>
+                <br/>
+                <div style="">
+                <apex:commandButton style="color:green" action="{!Save}" value="Login"/>
+                </div>
+                <apex:outputLink style="padding-left:200px" value="https://mvclouds92-dev-ed--c.develop.vf.force.com/apex/Accountregister?core.apexpages.request.devconsole=1">Register Here</apex:outputLink>
+                <apex:outputLink style="padding-right:0px" value="https://mvclouds92-dev-ed--c.develop.vf.force.com/apex/Forgotpass?core.apexpages.request.devconsole=1">Forget Password</apex:outputLink>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
