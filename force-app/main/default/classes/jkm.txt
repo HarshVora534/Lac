@@ -1,0 +1,195 @@
+@isTest
+public class MyApexTestClass {
+
+    // Test method to cover functionality of Apex class method
+    @isTest
+    static void testMyApexClassMethod() {
+        // Test data setup
+        // Create test records or any necessary data for testing
+
+        // Call the method you want to test
+        // Pass the test data to the method
+
+        // Assert the expected results
+        // Verify that the method produces the expected output
+    }
+
+    // Test method to cover functionality of trigger
+    @isTest
+    static void testMyTrigger() {
+        // Test data setup
+        // Create test records or any necessary data for testing
+
+        // Perform DML operation that fires the trigger
+        // Insert, update, delete records as needed
+
+        // Query the records affected by the trigger
+
+        // Assert the expected results
+        // Verify that the trigger behaves as expected
+    }
+
+    // Add more test methods as needed to cover other classes and triggers
+}
+
+
+
+@isTest
+public class TestScheduleUpdateRatingWarm {
+    
+    @isTest
+    static void testScheduledJob() {
+        // Create test data
+        List<Account> testAccounts = new List<Account>();
+        for (Integer i = 0; i < 5; i++) {
+            Account acc = new Account(Name = 'Test Account ' + i, Email__c = 'test' + i + '@example.com', Rating = 'Cold');
+            testAccounts.add(acc);
+        }
+        insert testAccounts;
+
+        // Schedule the job
+        Test.startTest();
+        scheduleupdateratingwarm job = new scheduleupdateratingwarm();
+        String jobId = System.schedule('Test Schedule', '0 0 0 15 3 ? 2022', job);
+        Test.stopTest();
+
+        // Verify the job has run successfully
+        System.assertEquals(5, [SELECT count() FROM Account WHERE Rating = 'Warm']);
+
+        // Clean up: cancel the scheduled job
+        System.abortJob(jobId);
+    }
+}
+
+///////////////////////////////////////////////////////
+
+@isTest
+public class TestScheduledJobs {
+
+    @isTest
+    static void testScheduledJobs() {
+        // Create test data for scheduleupdateratingwarm
+        List<Account> testAccountsRatingWarm = new List<Account>();
+        for (Integer i = 0; i < 5; i++) {
+            Account acc = new Account(Name = 'Test Account ' + i, Email__c = 'test' + i + '@example.com', Rating = 'Cold');
+            testAccountsRatingWarm.add(acc);
+        }
+        insert testAccountsRatingWarm;
+
+        // Create test data for schedulefornewaccdescription
+        List<Account> testAccountsDescription = new List<Account>();
+        for (Integer i = 0; i < 5; i++) {
+            Account acc = new Account(Name = 'Test Account ' + i, Email__c = 'test' + i + '@example.com');
+            testAccountsDescription.add(acc);
+        }
+        insert testAccountsDescription;
+
+        // Schedule the jobs
+        Test.startTest();
+        scheduleupdateratingwarm job1 = new scheduleupdateratingwarm();
+        String jobId1 = System.schedule('Test Schedule 1', '0 0 0 15 3 ? 2022', job1);
+
+        schedulefornewaccdescription job2 = new schedulefornewaccdescription();
+        String jobId2 = System.schedule('Test Schedule 2', '0 0 0 15 3 ? 2022', job2);
+        Test.stopTest();
+
+        // Verify scheduleupdateratingwarm job has run successfully
+        System.assertEquals(5, [SELECT count() FROM Account WHERE Rating = 'Warm']);
+
+        // Verify schedulefornewaccdescription job has run successfully
+        System.assertNotEquals(0, [SELECT count() FROM Account WHERE Description != null]);
+
+        // Clean up: cancel the scheduled jobs
+        System.abortJob(jobId1);
+        System.abortJob(jobId2);
+    }
+}
+
+
+
+
+
+
+
+
+
+//////////////////////////////////
+@isTest
+public class TestTriggerOppHandler {
+
+    @isTest
+    static void testHandleOpportunityInsert() {
+        // Create test data
+        List<Opportunity> testOpps = new List<Opportunity>();
+        for (Integer i = 0; i < 5; i++) {
+            Opportunity opp = new Opportunity(Name = 'Test Opportunity ' + i);
+            testOpps.add(opp);
+        }
+
+        // Call the handleOpportunityInsert method
+        Test.startTest();
+        TriggerOppHandler.handleOpportunityInsert(testOpps);
+        Test.stopTest();
+
+        // Assert the expected results
+        for (Opportunity opp : testOpps) {
+            System.assertEquals('New Customer', opp.Type);
+        }
+    }
+
+    @isTest
+    static void testHandleOpportunityUpdate() {
+        // Create test data
+        List<Opportunity> testOpps = new List<Opportunity>();
+        for (Integer i = 0; i < 5; i++) {
+            Opportunity opp = new Opportunity(Name = 'Test Opportunity ' + i);
+            testOpps.add(opp);
+        }
+        insert testOpps;
+
+        // Call the handleOpportunityUpdate method
+        Test.startTest();
+        TriggerOppHandler.handleOpportunityUpdate(testOpps, new Map<Id, Opportunity>());
+        Test.stopTest();
+
+        // Assert the expected results
+        List<Task> tasks = [SELECT Subject, Status, Description, WhatId FROM Task];
+        System.assertEquals(5, tasks.size());
+        for (Task t : tasks) {
+            System.assertEquals('Test Tasks', t.Subject);
+            System.assertEquals('In Progress', t.Status);
+            System.assertNotEquals(null, t.Description);
+        }
+    }
+
+    @isTest
+    static void testHandleOpportunityUpdate1() {
+        // Create test data
+        List<Opportunity> testOpps3 = new List<Opportunity>();
+        for (Integer i = 0; i < 5; i++) {
+            Opportunity opp = new Opportunity(Name = 'Test Opportunity ' + i);
+            testOpps3.add(opp);
+        }
+        insert testOpps3;
+
+        // Call the handleOpportunityUpdate1 method
+        Test.startTest();
+        TriggerOppHandler.handleOpportunityUpdate1(testOpps3);
+        Test.stopTest();
+
+        // Assert the expected results
+        for (Opportunity opp : testOpps3) {
+            System.assertEquals('Prospecting', opp.StageName);
+            System.assertEquals(System.today().addDays(15), opp.CloseDate);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
