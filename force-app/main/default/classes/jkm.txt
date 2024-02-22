@@ -184,6 +184,148 @@ public class TestTriggerOppHandler {
         }
     }
 }
+///////////////////////////////////// ACCC Handler
+
+@isTest
+private class TriggerAcccHandlerTest {
+    @isTest
+    static void testBeforeInsert() {
+        // Test data preparation
+        List<Account> testAccounts = new List<Account>();
+        for(Integer i = 0; i < 5; i++) {
+            Account acc = new Account();
+            acc.Name = 'TestAccount' + i;
+            testAccounts.add(acc);
+        }
+        
+        // Test before insert trigger
+        Test.startTest();
+        TriggerAcccHandler.beforeinsert(testAccounts);
+        Test.stopTest();
+        
+        // Verify if Prefix 'Mr.' is added to the name for all accounts
+        for(Account acc : testAccounts) {
+            System.assertEquals('Mr.TestAccount' + i, acc.Name);
+        }
+    }
+    
+    @isTest
+    static void testAfterInsertDuplicate() {
+        // Test data preparation
+        List<Account> testAccounts = new List<Account>();
+        for(Integer i = 0; i < 5; i++) {
+            Account acc = new Account();
+            acc.Name = 'TestAccount' + i;
+            testAccounts.add(acc);
+        }
+        
+        // Test after insert duplicate trigger
+        Test.startTest();
+        TriggerAcccHandler.afterinsertdup(testAccounts);
+        Test.stopTest();
+        
+        // Verify if contacts are created for all accounts
+        List<Contact> createdContacts = [SELECT Id FROM Contact WHERE AccountId IN :testAccounts];
+        System.assertNotEquals(0, createdContacts.size());
+    }
+
+    // Add similar test methods for other methods in the TriggerAcccHandler class
+    
+    @isTest
+    static void testCatchStatements() {
+        // Simulate an exception being thrown in each method
+        // For brevity, let's just call each method with null arguments to force an exception
+        try {
+            TriggerAcccHandler.beforeinsert(null);
+        } catch (Exception e) {
+            // Verify if the exception was handled correctly
+            System.assertNotEquals(null, e);
+            Integer lineNumber = e.getLineNumber();
+            System.assertEquals('Plz find error in respective class', e.getMessage());
+            // Assuming ErrorLogHandler is a class with a static method createExceptionRecord for logging exceptions
+            // You should adjust this part according to your actual implementation
+            ErrorLogHandler.createExceptionRecord(e, 'TriggerAcccHandler', 'BeforeInsert', lineNumber, 'Plz find error in respective class');
+        }
+
+        try {
+            TriggerAcccHandler.afterinsertdup(null);
+        } catch (Exception e) {
+            // Verify if the exception was handled correctly
+            System.assertNotEquals(null, e);
+            Integer lineNumber = e.getLineNumber();
+            System.assertEquals('Plz find error in respective class', e.getMessage());
+            ErrorLogHandler.createExceptionRecord(e, 'TriggerAcccHandler', 'afterinsertdup', lineNumber, 'Plz find error in respective class');
+        }
+
+        // Repeat for other methods as needed
+    }
+}
+///////////////
+
+@isTest
+private class TestTriggerAcccHandler {
+    
+    // Test method for beforeupdate
+    @isTest
+    static void testBeforeUpdate() {
+        // Create test data
+        Account oldAccount = new Account(Name = 'Old Name');
+        Account newAccount = new Account(Name = 'New Name');
+        insert oldAccount;
+        
+        // Create related contacts
+        Contact relatedContactWithEmail = new Contact(AccountId = oldAccount.Id, Email = 'test@example.com');
+        Contact relatedContactWithoutEmail = new Contact(AccountId = oldAccount.Id, Email = null);
+        insert new List<Contact>{relatedContactWithEmail, relatedContactWithoutEmail};
+        
+        Map<Id, Account> oldMap = new Map<Id, Account>{oldAccount.Id => oldAccount};
+        List<Account> newAccounts = new List<Account>{newAccount};
+        
+        // Start test
+        Test.startTest();
+        // Call beforeupdate method
+        TriggerAcccHandler.beforeupdate(newAccounts, oldMap);
+        Test.stopTest();
+        
+        // Verify that email is sent only for the related contact with email
+        List<Messaging.SingleEmailMessage> sentEmails = [SELECT Subject, HtmlBody, ToAddress FROM Messaging.SingleEmailMessage];
+        System.assertEquals(1, sentEmails.size(), 'Email should be sent only once');
+        System.assertEquals('Account Name Updated', sentEmails[0].getSubject(), 'Subject should be "Account Name Updated"');
+        System.assertEquals('test@example.com', sentEmails[0].getToAddresses()[0], 'Email should be sent to the related contact with email');
+        System.assert(sentEmails[0].getPlainTextBody().contains('The name of the account New Name has been updated.'), 'Body should contain the updated account name');
+    }
+}
+
+// Test method for beforeupdate
+    @isTest
+    static void testBeforeUpdate() {
+        // Create test data
+        Account oldAccount = new Account(Name = 'Old Name');
+        Account newAccount = new Account(Name = 'New Name');
+        insert oldAccount;
+        
+        // Create related contacts
+        Contact relatedContactWithEmail = new Contact(AccountId = oldAccount.Id, Email = 'test@example.com');
+        Contact relatedContactWithoutEmail = new Contact(AccountId = oldAccount.Id, Email = null);
+        insert new List<Contact>{relatedContactWithEmail, relatedContactWithoutEmail};
+        
+        Map<Id, Account> oldMap = new Map<Id, Account>{oldAccount.Id => oldAccount};
+        List<Account> newAccounts = new List<Account>{newAccount};
+        
+        // Start test
+        Test.startTest();
+        // Call beforeupdate method
+        TriggerAcccHandler.beforeupdate(newAccounts, oldMap);
+        Test.stopTest();
+        
+        // Verify that email is sent only for the related contact with email
+        List<Messaging.SingleEmailMessage> sentEmails = [SELECT Subject, HtmlBody, ToAddress FROM Messaging.SingleEmailMessage];
+        System.assertEquals(1, sentEmails.size(), 'Email should be sent only once');
+        System.assertEquals('Account Name Updated', sentEmails[0].getSubject(), 'Subject should be "Account Name Updated"');
+        System.assertEquals('test@example.com', sentEmails[0].getToAddresses()[0], 'Email should be sent to the related contact with email');
+        System.assert(sentEmails[0].getPlainTextBody().contains('The name of the account New Name has been updated.'), 'Body should contain the updated account name');
+    }
+
 
 
 

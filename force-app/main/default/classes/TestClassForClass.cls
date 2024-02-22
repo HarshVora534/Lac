@@ -80,6 +80,7 @@ public class TestClassForClass {
         for(Lead lead : updatedLeads) {
             System.assertEquals('Hot', lead.Rating, 'Lead rating should be set to "Hot"');
         }
+
         List<Task> tasks = [SELECT Subject, Status, Description, WhatId FROM Task];
         System.assertEquals(5, tasks.size());
         for (Task t : tasks) {
@@ -98,4 +99,108 @@ public class TestClassForClass {
         System.abortJob(jobId2);
         System.abortJob(jobId3);
     }
+
+    // Lead Handler Tests
+
+    
+
+
+    // Account Handler Tests
+
+    //Prefix will be added to name Mr.
+    //Create a new contact for the account with the same name as the contact 
+    //Submit for Approval on new account creation
+    // Del dup account
+    //on modifying to hot record should be shared with wilson
+    @isTest
+    static void testApprovalAfterInsert() {
+        List<Account> testAccounts = new List<Account>();
+        testAccounts.add(new Account(Name = 'Test Account 3'));
+        
+        Test.startTest();
+        TriggerAcccHandler.approvalAfterInsert(testAccounts);
+        TriggerAcccHandler.beforeinsert(testAccounts);
+        TriggerAcccHandler.afterinsertdup(testAccounts);
+        TriggerAcccHandler.handleDuplicateAccounts(testAccounts);
+        Test.stopTest();    
+    }
+
+    //test to modify account rating hot 
+    @isTest
+    static void testModifiedToHot() {
+        List<Account> testAccounts = new List<Account>();
+        testAccounts.add(new Account(Name = 'Test Account 5', Rating = 'Hot'));
+        
+        Test.startTest();
+        TriggerAcccHandler.modifiedToHot(testAccounts);
+        Test.stopTest();    
+    }
+
+    @isTest
+    static void testtrycatchstatement()
+    {
+        try{
+            TriggerAcccHandler.approvalAfterInsert(null);   
+        }
+        catch(Exception e){
+            System.assertNotEquals(null, e);
+            Integer lineNumber=e.getLineNumber();
+            ErrorLogHandler.createExceptionRecord(e, 'TriggerAcccHandler', 'approvalafterinsert', lineNumber, 'Plz find error in respective class');
+        }
+    }
+
+    @isTest
+    static void testtrycatchstatement1()
+    {
+        try{
+            TriggerAcccHandler.beforeinsert(null);
+        }
+        catch(Exception e){
+            System.assertNotEquals(null, e);
+            Integer lineNumber=e.getLineNumber();
+            ErrorLogHandler.createExceptionRecord(e, 'TriggerAcccHandler', 'beforeinsert', lineNumber, 'Plz find error in respective class');
+        }
+    }
+   
+    @isTest
+    static void testtrycatchstatement2()
+    {
+        try{
+            TriggerAcccHandler.afterinsertdup(null);
+        }
+        catch(Exception e){
+            System.assertNotEquals(null, e);
+            Integer lineNumber=e.getLineNumber();
+            ErrorLogHandler.createExceptionRecord(e, 'TriggerAcccHandler', 'afterinsertdup', lineNumber, 'Plz find error in respective class');
+        }
+    }
+
+    @isTest
+    static void testtrycatchstatement3()
+    {
+        try{
+            TriggerAcccHandler.handleDuplicateAccounts(null);
+        }
+        catch(Exception e){
+            System.assertNotEquals(null, e);
+            Integer lineNumber=e.getLineNumber();
+            ErrorLogHandler.createExceptionRecord(e, 'TriggerAcccHandler', 'handleDuplicateAccounts', lineNumber, 'Plz find error in respective class');
+        }
+    }
+
+    @isTest
+    static void testtrycatchstatement4()
+    {
+        try{
+            TriggerAcccHandler.modifiedToHot(null);
+        }
+        catch(Exception e){
+            System.assertNotEquals(null, e);
+            Integer lineNumber=e.getLineNumber();
+            ErrorLogHandler.createExceptionRecord(e, 'TriggerAcccHandler', 'modifiedToHot', lineNumber, 'Plz find error in respective class');
+        }
+    }
+    
 }
+
+

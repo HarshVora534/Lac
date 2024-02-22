@@ -121,7 +121,7 @@ public class TriggerAcccHandler {
         
         
         
-        //On Updating Accunt Name mail will be forwarded to related contacts
+        //On Updating Account Name mail will be forwarded to related contacts
         public static void beforeupdate(List<Account> newAccounts, Map<Id, Account> oldMap)
          {
                 try
