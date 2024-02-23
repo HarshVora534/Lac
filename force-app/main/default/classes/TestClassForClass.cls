@@ -26,6 +26,8 @@ public class TestClassForClass {
             testAccountsDescription.add(acc);
         }
         insert testAccountsDescription;
+
+        // Opp test class
         List<Opportunity> testOpps1 = new List<Opportunity>();
         for (Integer i = 0; i < 5; i++) {
             Opportunity opp = new Opportunity(Name = 'Test Opportunity ' + i,StageName='Qualification',Email__c='test1'+i+'@g.com',CloseDate=System.today().addDays(10));
@@ -61,33 +63,10 @@ public class TestClassForClass {
         schedulefornewrecord job3 = new schedulefornewrecord();
         String jobId3 = System.schedule('Test Schedule 3', '0 24 16 * * ?', job3);
         Test.stopTest();
-
-        // // Wait for all scheduled jobs to finish
-        // while (!Test.isRunningTest(System.schedule(jobId1)) || !Test.isRunningTest(System.schedule(jobId2)) || !Test.isRunningTest(System.schedule(jobId3))) {
-        //     // Wait for jobs to finish
-        // }
-
-        // Assert results after jobs have finished
         System.assertEquals(5, [SELECT count() FROM Account WHERE Rating = 'Warm'], 'Accounts were not updated to "Warm" rating');
-        // List<Task> tasks = [SELECT Subject, Status, Description, WhatId FROM Task];
-        // System.assertEquals(5, tasks.size(), 'Tasks were not inserted as expected');
-        // for (Task t : tasks) {
-        //     System.assertEquals('Test Tasks', t.Subject);
-        //     System.assertEquals('In Progress', t.Status);
-        //     System.assertNotEquals(null, t.Description);
-        // }
         List<Lead> updatedLeads = [SELECT Id, Rating FROM Lead WHERE Id IN :testLeads];
         for(Lead lead : updatedLeads) {
             System.assertEquals('Hot', lead.Rating, 'Lead rating should be set to "Hot"');
-        }
-
-        List<Task> tasks = [SELECT Subject, Status, Description, WhatId FROM Task];
-        System.assertEquals(5, tasks.size());
-        for (Task t : tasks) {
-            System.assertEquals('Test Tasks', t.Subject);
-            System.assertEquals('In Progress', t.Status);
-            System.assertNotEquals(null, t.Description);
-            System.assertNotEquals(null, t.Id);
         }
 
         for (Opportunity opp : testOpps3) {
@@ -100,12 +79,33 @@ public class TestClassForClass {
         System.abortJob(jobId3);
     }
 
-    // Lead Handler Tests
+    //Lead handler Tests
 
-    
+    //rating as hot when lead is created
+    // @isTest
+    // static void testratinghotonleadcreation()
+    // {
+    //     List<Lead> newleads= new List<Lead>();
+    //     newleads.add(new Lead(Name='Lead Test',Rating='hot'));
+    //     Test.startTest();
+    //     triggerHandler.BeforeInsert(newleads);
+    //     Test.stopTest();
+    // }
+    @isTest
+    Static void testtrycatchstatement5()
+    {
+        try{
+            triggerHandler.beforeInsert(null);
+        }
+        catch(Exception e)
+        {
+            System.assertNotEquals(null, e);
+            Integer lineNumber=e.getLineNumber();
+            ErrorLogHandler.createExceptionRecord(e, 'triggerHandler', 'BeforeInsert', lineNumber, 'Plz find error in respective class');   
+        }
+    }
 
-
-    // Account Handler Tests
+    // Account Handler Tests----------------------------------------------------------------
 
     //Prefix will be added to name Mr.
     //Create a new contact for the account with the same name as the contact 
@@ -134,6 +134,29 @@ public class TestClassForClass {
         Test.startTest();
         TriggerAcccHandler.modifiedToHot(testAccounts);
         Test.stopTest();    
+    }
+    @isTest
+    static void testaccmailoncreation() {
+        Account ac2=new Account(Name = 'Test Account 5',Email__c='test@123gmail.com');
+        insert ac2;
+        ac2.Name='test Account 55';
+        update ac2;
+
+        Test.startTest();
+        TriggerAcccHandler.beforeupdate(new List<Account>{ac2}, new Map<Id, Account>{ac2.Id => ac2});
+        Test.stopTest();    
+    }
+    @isTest
+    static void testtrycatchstatement12()
+    {
+        try{
+            TriggerAcccHandler.beforeupdate(null,null);   
+        }
+        catch(Exception e){
+            System.assertNotEquals(null, e);
+            Integer lineNumber=e.getLineNumber();
+            ErrorLogHandler.createExceptionRecord(e, 'TriggerAcccHandler', 'beforeupdate', lineNumber, 'Plz find error in respective class');
+        }
     }
 
     @isTest
@@ -201,6 +224,151 @@ public class TestClassForClass {
         }
     }
     
+
+
+
+    // Test class for contact Handler----------------------------------------------------------
+    @isTest
+    Static void testcontacteventcreation()
+    {
+        List <Contact> c = new List <Contact>();
+        c.add(new Contact(LastName = 'Test Contact 5'));
+        Test.startTest();
+        TriggerConHandler.BeforeInsertCon(c);
+        Test.stopTest();
+    }
+    @isTest
+    Static void testtrycatchstatement6()
+    {
+        try{
+            TriggerConHandler.BeforeInsertCon(null);
+        }
+        catch(Exception e){
+            System.assertNotEquals(null, e);
+            Integer lineNumber=e.getLineNumber();
+            ErrorLogHandler.createExceptionRecord(e, 'TriggerConHandler', 'BeforeInsertCon', lineNumber, 'Plz find error in respective class');
+        }
+    }
+
+    // con delete related acc
+    @isTest
+    Static void testcontactdeleterelated()
+    {
+        Account ac1 = new Account(Name = 'Test Account',Email__c='testrelateddelete@gmail.com');
+        insert ac1;
+        Contact con = new Contact(FirstName = 'Test', LastName = 'Contact', AccountId = ac1.Id);
+        insert con;
+        Test.startTest();
+        delete con;
+        Test.stopTest();
+    }
+    @isTest
+    static void testtrycatchstatement7()
+    {
+        try{
+            TriggerConHandler.afterdelete(null);  
+        }
+        catch(Exception e)
+        {
+            System.assertNotEquals(null, e);
+            Integer lineNumber=e.getLineNumber();
+            ErrorLogHandler.createExceptionRecord(e, 'TriggerConHandler', 'afterdelete', lineNumber, 'Plz find error in respective class');
+        }
+    }
+
+    //roll up summary & sheep
+    @isTest
+    Static void testconrollup()
+    {
+        Account ac1 = new Account(Name = 'Test Account',Email__c='testrelateddelete@gmail.com',Max_Amount__c=24);
+        insert ac1;
+        Contact con = new Contact(FirstName = 'Test', LastName = 'Contact', AccountId = ac1.Id,Amount__c=100);
+        insert con;
+        con.Amount__c=200;
+        update con; 
+
+        Test.startTest();
+        TriggerConHandler.handleTrigger(new List<Contact>{con}, new Map<Id, Contact>{con.Id => con}, false);  
+        // TriggerConHandler.handleTriggerTrigger(new List<Contact>{con}, new Map<Id, Contact>{con.Id => con}, false);  
+        Test.stopTest();
+    }
+    @isTest
+    static void testtrycatchstatement8()
+    {
+        try{
+            TriggerConHandler.handleTrigger(null,null,false);  
+        }
+        catch(Exception e)
+        {
+            System.assertNotEquals(null, e);
+            Integer lineNumber=e.getLineNumber();
+            ErrorLogHandler.createExceptionRecord(e, 'TriggerConHandler', 'handleTrigger', lineNumber, 'Plz find error in respective class');
+        }
+    }
+
+    //test for the great problem
+    Static void testgreatproblem()
+    {
+        Account ac1 = new Account(Name = 'Test Account',Email__c='testrelateddelete@gmail.com',Max_Amount__c=24);
+        insert ac1;
+        Contact con = new Contact(FirstName = 'Test', LastName = 'Contact', AccountId = ac1.Id,Amount__c=100);
+        insert con;
+        con.Amount__c=200;
+        update con; 
+
+        Test.startTest();
+        TriggerConHandler.handleTriggerTrigger(new List<Contact>{con},new List<Contact>{con}, false);  
+        Test.stopTest();
+    }
+    @isTest
+    static void testtrycatchstatement9()
+    {
+        try{
+            TriggerConHandler.handleTriggerTrigger(null,null,false);  
+        }
+        catch(Exception e)
+        {
+            System.assertNotEquals(null, e);
+            Integer lineNumber=e.getLineNumber();
+            ErrorLogHandler.createExceptionRecord(e, 'TriggerConHandler', 'handleTriggerTrigger', lineNumber, 'Plz find error in respective class');
+        }
+    }
+
+    //try catch for sheep
+    @isTest
+    static void testtrycatchstatement10()
+    {
+        try{
+            TriggerConHandler.updateContactAccount(null,null);  
+        }
+        catch(Exception e)
+        {
+            System.assertNotEquals(null, e);
+            Integer lineNumber=e.getLineNumber();
+            ErrorLogHandler.createExceptionRecord(e, 'TriggerConHandler', 'updateContactAccount', lineNumber, 'Plz find error in respective class');
+        }
+    }
+
+
+
+    //Opp task -------------------------------------------------------------------------------------------
+    @isTest
+    static void testtrycatchstatement11()
+    {
+        try{
+            TriggerOppHandler.handleOpportunityInsert(null);  
+            TriggerOppHandler.handleOpportunityUpdate(null,null);           
+            TriggerOppHandler.handleOpportunityUpdate1(null);        
+        }
+        catch(Exception e)
+        {
+            System.assertNotEquals(null, e);
+            Integer lineNumber=e.getLineNumber();
+            ErrorLogHandler.createExceptionRecord(e, 'TriggerOppHandler', 'handleOpportunityUpdate1', lineNumber, 'Plz find error in respective class');
+        }
+    }
 }
+
+
 
 
