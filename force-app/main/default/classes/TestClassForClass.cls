@@ -367,8 +367,23 @@ public class TestClassForClass {
             ErrorLogHandler.createExceptionRecord(e, 'TriggerOppHandler', 'handleOpportunityUpdate1', lineNumber, 'Plz find error in respective class');
         }
     }
-}
+
+    
+    @isTest
+    static void testHandleOpportunityUpdate() {
+        Opportunity oldOpp = new Opportunity(Name = 'Old Opportunity',StageName='Qualification',Email__c='test2@g.com',CloseDate=System.today().addDays(10));
+        insert oldOpp;
+        oldOpp.Name='old opp 4';
+        update oldOpp;
+        
+        Test.startTest();
+        TriggerOppHandler.handleOpportunityUpdate(new List<Opportunity> {oldOpp}, new Map<Id,Opportunity>{oldOpp.Id => oldOpp});
+        Test.stopTest();
+    }
 
 
+    }
+
+  
 
 
