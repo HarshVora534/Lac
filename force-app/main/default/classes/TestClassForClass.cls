@@ -382,8 +382,39 @@ public class TestClassForClass {
     }
 
 
+    //test class for batch class
+    @isTest
+    static void testBatchable() {
+        Account testAccounts= new Account(Name = 'Test Account111111',Email__c='test456@gmail.com');
+        insert testAccounts;
+
+        Test.startTest();
+        AccountDescchnage batchInstance = new AccountDescchnage();
+        Database.executeBatch(batchInstance);
+        Test.stopTest();
+    }
+    @isTest
+    static void testSchedulable() {
+        Test.startTest();
+        String jobId = System.schedule('Test AccountDescchnage', '0 0 0 * * ?', new AccountDescchnage());
+        Test.stopTest();
+        System.assertNotEquals(null, jobId);
+        CronTrigger ct = [SELECT Id, CronExpression, TimesTriggered, NextFireTime FROM CronTrigger WHERE Id = :jobId];
+        System.assertEquals('0 0 0 * * ?', ct.CronExpression);
     }
 
+    @isTest
+    static void testBatchable1() {
+        // for(Integer i=0;i<2000;i++)
+        // {
+        Account testAccounts= new Account(Name = 'Test Account111111',Email__c='test456@gmail.com');
+        insert testAccounts;
+        // }
+
+        Test.startTest();
+        AccountInsertBatch batchInstance = new AccountInsertBatch();
+        Database.executeBatch(batchInstance);
+        Test.stopTest();
+    }
   
-
-
+}
