@@ -1,5 +1,4 @@
 <aura:component implements="force:appHostable">
     <aura:attribute name='fields' type='String[]' default="['FirstName','LastName','Phone']"></aura:attribute>
     <lightning:recordForm objectApiName="Contact" fields="{!v.fields}" onsuccess="{!c.recordController}"></lightning:recordForm>
-    <aura:handler name="render" value="{!this}" action="{!c.addAutocompleteToFields}"/>
 </aura:component>

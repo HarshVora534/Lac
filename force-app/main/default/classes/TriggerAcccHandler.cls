@@ -103,14 +103,27 @@ public class TriggerAcccHandler {
         public static void modifiedToHot(List<Account> share) {
             try {
                 String wilsonUserId = '0055g00000KNs8OAAT'; 
-                
+
                 for(Account acc : share) {
+                    system.debug('check account '+acc);
+                    system.debug('check account '+acc.Rating);
                     if(acc.Rating == 'Hot') {
                         AccountShare shareRecord = new AccountShare();
                         shareRecord.AccountId = acc.Id;
                         shareRecord.AccountAccessLevel = 'Read'; 
+                        shareRecord.OpportunityAccessLevel = 'Read'; 
                         shareRecord.UserOrGroupId = wilsonUserId;
-                        insert shareRecord;
+                        Database.SaveResult sr = Database.insert(shareRecord,false);
+                        
+                        // Process the save results.
+                        if(sr.isSuccess()){
+                            // Indicates success
+                            system.debug('success');
+                        }else{
+                            system.debug('error');
+                            Database.Error err = sr.getErrors()[0];
+                            system.debug('err.getMessage '+err.getMessage());
+                        }
                     }
                 }
             } catch(Exception e) {
