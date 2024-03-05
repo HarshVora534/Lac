@@ -1,0 +1,130 @@
+<!-- <aura:component controller="DragAndDropContact" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable">
+    <aura:attribute name="searchKeyword1" type="String" />
+    <aura:attribute name="searchKeyword2" type="String" />
+    <aura:attribute name="searchResults1" type="List" />
+    <aura:attribute name="searchResults2" type="List" />
+    <aura:attribute name="contactCount1" type="Integer" />
+    <aura:attribute name="contactCount2" type="Integer" />
+    
+    <div style="display: flex;justify-content:space-evenly">
+        <div style="border:2px solid black">
+            <h2 style="color: black;text-align:center;font-size:50px;font-weight:750;padding-top:15px;padding-bottom:25px;background-color:whitesmoke;border-radius:10%">Section 1</h2>
+            <div style="padding-top: 20px;">
+                <lightning:input  type="text" style="text-align: center;font-size:40px;font-weight:600" label="Search Accounts" value="{!v.searchKeyword1}" />
+                <lightning:button label="Search" onclick="{!c.searchAccounts1}" />
+            </div>
+            <p style="font-size: 30px;font-weight:500;padding-top:20px">Contact Count: {!v.contactCount1}</p>
+            <aura:if isTrue="{!not(empty(v.searchResults1))}">
+                <div style="margin: 10px;">
+                    <aura:iteration items="{!v.searchResults1}" var="result">
+                        <div style="border:2px solid Black;border-radius:5px">
+                            <h3><b>{!result.account.Name}:-</b></h3>
+                            <br></br>
+                            <div style="padding-top: 5px;margin:5px">
+                                <aura:iteration items="{!result.relatedContacts}" var="contact">
+                                    <div ondragstart="{!c.handleDragStart}" data-parentaccount="{!contact.AccountId}">{!contact.Name}</div>
+                                </aura:iteration>
+                            </div>
+                        </div>
+                        <br></br>
+                    </aura:iteration>
+                </div>
+            </aura:if>
+        </div>
+        
+        <div style="border:2px solid black">
+            <h2 style="color: black;text-align:center;font-size:50px;;font-weight:750;padding-top:15px;padding-bottom:25px;background-color:whitesmoke;border-radius:10%">Section 2</h2>
+            <div style="padding-top: 20px;">
+                <lightning:input type="text" style="text-align: center;font-size :40px;font-weight:600" label="Search Accounts" value="{!v.searchKeyword2}" />
+                <div>
+                    <lightning:button label="Search" onclick="{!c.searchAccounts2}" />
+                </div>
+            </div>
+            <p style="font-size: 30px;font-weight:500;padding-top:20px">Contact Count: {!v.contactCount2}</p>
+            <aura:if isTrue="{!not(empty(v.searchResults2))}">
+                <div style="margin: 10px;" ondrop="{!c.handleDrop}" ondragover="{!c.allowDrop}" data-accountid="{!account.Id}" class="dropzone">
+                    <aura:iteration items="{!v.searchResults2}" var="result">
+                        <div style="border:2px solid Black;border-radius:5px">
+                            <h3><b>{!result.account.Name}:-</b></h3>
+                            <br></br>
+                            <div style="padding-top: 5px;margin:5px">
+                                <aura:iteration items="{!result.relatedContacts}" var="contact">
+                                    <div>{!contact.Name}</div>
+                                </aura:iteration>
+                            </div>
+                        </div>
+                        <br></br>
+                    </aura:iteration>
+                </div>
+            </aura:if>
+        </div>
+    </div>
+    
+</aura:component>
+ -->
+
+
+
+ <aura:component controller="DragAndDropContact" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable">
+    <aura:attribute name="searchKeyword1" type="String" />
+    <aura:attribute name="searchKeyword2" type="String" />
+    <aura:attribute name="searchResults1" type="List" />
+    <aura:attribute name="searchResults2" type="List" />
+    <aura:attribute name="contactCount1" type="Integer" />
+    <aura:attribute name="contactCount2" type="Integer" />
+    
+    <div style="display: flex;justify-content:space-evenly">
+        <div style="border:2px solid black">
+            <h2 style="color: black;text-align:center;font-size:50px;font-weight:750;padding-top:15px;padding-bottom:25px;background-color:whitesmoke;border-radius:10%">Section 1</h2>
+            <div style="padding-top: 20px;">
+                <lightning:input  type="text" style="text-align: center;font-size:40px;font-weight:600" label="Search Accounts" value="{!v.searchKeyword1}" />
+                <lightning:button label="Search" onclick="{!c.searchAccounts1}" />
+            </div>
+            <p style="font-size: 30px;font-weight:500;padding-top:20px">Contact Count: {!v.contactCount1}</p>
+            <aura:if isTrue="{!not(empty(v.searchResults1))}">
+                <div style="margin: 10px;">
+                    <aura:iteration items="{!v.searchResults1}" var="result">
+                        <div style="border:2px solid Black;border-radius:5px">
+                            <h3><b>{!result.account.Name}:-</b></h3>
+                            <br></br>
+                            <div style="padding-top: 5px;margin:5px">
+                                <aura:iteration items="{!result.relatedContacts}" var="contact">
+                                    <div ondragstart="{!c.handleDragStart}" data-parentaccount="{!contact.AccountId}" draggable="true">{!contact.Name}</div>
+                                </aura:iteration>
+                            </div>
+                        </div>
+                        <br></br>
+                    </aura:iteration>
+                </div>
+            </aura:if>
+        </div>
+        
+        <div style="border:2px solid black">
+            <h2 style="color: black;text-align:center;font-size:50px;;font-weight:750;padding-top:15px;padding-bottom:25px;background-color:whitesmoke;border-radius:10%">Section 2</h2>
+            <div style="padding-top: 20px;">
+                <lightning:input type="text" style="text-align: center;font-size :40px;font-weight:600" label="Search Accounts" value="{!v.searchKeyword2}" />
+                <div>
+                    <lightning:button label="Search" onclick="{!c.searchAccounts2}" />
+                </div>
+            </div>
+            <p style="font-size: 30px;font-weight:500;padding-top:20px">Contact Count: {!v.contactCount2}</p>
+            <aura:if isTrue="{!not(empty(v.searchResults2))}">
+                <div style="margin: 10px;" ondrop="{!c.handleDrop}" ondragover="{!c.allowDrop}" class="dropzone">
+                    <aura:iteration items="{!v.searchResults2}" var="result">
+                        <div style="border:2px solid Black;border-radius:5px">
+                            <h3><b>{!result.account.Name}:-</b></h3>
+                            <br></br>
+                            <div style="padding-top: 5px;margin:5px">
+                                <aura:iteration items="{!result.relatedContacts}" var="contact">
+                                    <div>{!contact.Name}</div>
+                                </aura:iteration>
+                            </div>
+                        </div>
+                        <br></br>
+                    </aura:iteration>
+                </div>
+            </aura:if>
+        </div>
+    </div>
+    
+</aura:component>
