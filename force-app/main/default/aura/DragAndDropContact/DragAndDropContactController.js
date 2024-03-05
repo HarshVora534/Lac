@@ -121,7 +121,6 @@
         event.preventDefault();
         var accountId = event.target.dataset.accountid;
         var contactId = event.dataTransfer.getData("text");
-    
         var action = component.get("c.updateParentAccount");
         action.setParams({
             "accountId": accountId,
