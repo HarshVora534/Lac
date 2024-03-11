@@ -1,0 +1,9 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId">
+    <aura:attribute name="eventDetails" type="Object"/>
+    
+    <lightning:input label="Event Name" value="{!v.eventDetails.Name}"/>
+    <lightning:input type="datetime" label="Event Date" value="{!v.eventDetails.EventDate}"/>
+    <lightning:input label="Event Description" value="{!v.eventDetails.Description}"/>
+    
+    <lightning:button label="Create Event" onclick="{!c.createEvent}"/>
+</aura:component>

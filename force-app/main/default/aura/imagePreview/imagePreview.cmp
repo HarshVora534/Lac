@@ -1,0 +1,6 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId">
+    <aura:registerEvent name="upload" type="c:fileUploadComplete"/>
+    <input type="file" aura:id="fileInput" onchange="{!c.handleFileChange}"/>
+</aura:component>
+
+

@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="Image Upload Event">
+    <aura:attribute name="imageURL" type="String"/>
+</aura:event>

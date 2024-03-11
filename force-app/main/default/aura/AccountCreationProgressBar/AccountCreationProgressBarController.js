@@ -1,6 +1,6 @@
 ({
     init : function(component, event, helper) {
-        component.set("v.currentStep", 1);
+        component.set("v.currentStep", 1); 
     },
     
     previousStep : function(component, event, helper) {
@@ -17,37 +17,16 @@
         }
     },
     
-    handleAccountSuccess : function(component, event, helper) {
-        var accountId = event.getParam("response").id;
-        component.set("v.accountId", accountId);
-    },
-    
-    handleContactLoad : function(component, event, helper) {
-        var contactForm = component.find("contactForm");
-        var accountId = component.get("v.accountId");
-        if (accountId) {
-            contactForm.set("v.fields.AccountId", accountId);
-        }
-    },
-    
-    saveEvent : function(component, event, helper) {
-        var contactId = component.get("v.contactId");
-        var eventRecord = component.find("eventForm").get("v.record");
-        eventRecord.fields.Subject = "Wizard Task";
-        eventRecord.fields.WhoId = contactId;
-        component.find("eventForm").saveRecord($A.getCallback(function(saveResult) {
-            if (saveResult.state === "SUCCESS" || saveResult.state === "DRAFT") {
-                // Handle success or draft state
-                console.log("Event saved successfully!");
-            } else if (saveResult.state === "INCOMPLETE") {
-                // Handle incomplete state
-                console.log("User is offline, device doesn't support drafts.");
-            } else if (saveResult.state === "ERROR") {
-                // Handle error state
-                console.log('Problem saving event, error: ' + JSON.stringify(saveResult.error));
-            } else {
-                console.log('Unknown problem, state: ' + saveResult.state + ', error: ' + JSON.stringify(saveResult.error));
-            }
-        }));
+    createEvent : function(component, event, helper) {
+        var eventDetails = component.get("v.eventDetails");
+        var action = component.get("c.createEventRecord");
+        action.setParams({
+            "eventDetails": eventDetails,
+            "recordId": component.get("v.recordId")
+        });
+        action.setCallback(this, function(response){
+            // handle response here
+        });
+        $A.enqueueAction(action);
     }
 })

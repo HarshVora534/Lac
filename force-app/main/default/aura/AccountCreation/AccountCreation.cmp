@@ -1,0 +1,9 @@
+<aura:component implements="force:appHostable">
+    <aura:attribute name="newAccount" type="Object" default="{'sobjectType':'Account'}"/>
+    
+    <lightning:input label="Account Name" value="{!v.newAccount.Name}"/>
+    <lightning:input label="Email" value="{!v.newAccount.Email__c}"/>
+    <lightning:input label="ExternalId" value="{!v.newAccount.Externalid__c}"/>
+    
+    <lightning:button label="createAccount" onclick="{!c.createAccount}"/>
+</aura:component>

@@ -1,0 +1,33 @@
+<aura:component controller="AccountOpportunityContactController" implements="force:appHostable">
+
+    <aura:attribute name="accountWrappers" type="List"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Account Name</th>
+                <th>Opportunities</th>
+                <th>Contacts</th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.accountWrappers}" var="wrapper">
+                <tr>
+                    <td>{!wrapper.account.Name}</td>
+                    <td>
+                        <aura:iteration items="{!wrapper.opportunities}" var="opp">
+                            <div>{!opp.Name}</div>
+                        </aura:iteration>
+                    </td>
+                    <td>
+                        <aura:iteration items="{!wrapper.contacts}" var="con">
+                            <div>{!con.Name}</div>
+                        </aura:iteration>
+                    </td>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

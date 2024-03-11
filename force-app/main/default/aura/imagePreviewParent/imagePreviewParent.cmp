@@ -1,0 +1,8 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId">
+    <aura:attribute name="imageURL" type="String"/>
+    <aura:handler name="upload" event="c:fileUploadComplete" action="{!c.handleUploadComplete}"/>
+    <c:imagePreview/>
+    <aura:if isTrue="{!not(empty(v.imageURL))}">
+        <img src="{!v.imageURL}" style="max-width: 100%;"/>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,26 @@
+<aura:component controller="WizardFormController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId ,force:appHostable" access="global">
+    <aura:attribute name="account" type="Account" default="{ 'sobjectType': 'Account' }"/>
+    <aura:if isTrue="{!v.step == 1}">
+        <lightning:input label="Account Name" value="{!v.account.Name}" />
+        <lightning:input label="Email__c" value="{!v.account.Email__c}"/>
+        <lightning:input label="Acc ExternalId" value="{!v.account.ExternalId}"/>
+        <lightning:button label="Next" onclick="{!c.nextStep}" />
+    </aura:if>
+
+    <aura:attribute name="contact" type="Contact" default="{ 'sobjectType': 'Contact' }"/>
+    <aura:if isTrue="{!v.step == 2}">
+        <lightning:input label="First Name" value="{!v.contact.FirstName}" />
+        <lightning:input label="Last Name" value="{!v.contact.LastName}" />
+        <lightning:button label="Previous" onclick="{!c.previousStep}" disabled="{!v.step == 1}" />
+        <lightning:button label="Next" onclick="{!c.nextStep}" />
+    </aura:if>
+
+    <aura:attribute name="event" type="Event" default="{ 'sobjectType': 'Event' }"/>
+    <aura:if isTrue="{!v.step == 3}">
+        <lightning:input label="Event Name" value="{!v.event.Subject}" />
+        <lightning:button label="Previous" onclick="{!c.previousStep}" />
+        <lightning:button label="Save" onclick="{!c.saveEvent}" />
+    </aura:if>
+
+    <lightning:progressIndicator currentStep="{!v.step}" type="base" />
+</aura:component>
