@@ -1,0 +1,13 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId">
+    <aura:attribute name="progress" type="Integer" default="0" />
+
+    <aura:method name="incrementProgress" action="{!c.incrementProgress}" />
+
+    <aura:method name="decrementProgress" action="{!c.decrementProgress}" />
+
+    <div>
+        <button onclick="{!c.decrementProgress}">Previous</button>
+        <progress value="{!v.progress}" max="100"></progress>
+        <button onclick="{!c.incrementProgress}">Next</button>
+    </div>
+</aura:component>

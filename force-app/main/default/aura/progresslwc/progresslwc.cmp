@@ -1,0 +1,13 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId ,force:appHostable">
+    <aura:attribute name="current" default="s2" type="String"/>
+    <aura:attribute name="hasError" default="false" type="Boolean"/>
+
+    <lightning:progressIndicator currentStep="{!v.current}" type="base" hasError="{!v.hasError}">
+        <lightning:progressStep label="Step 1" value="s1"/>
+        <lightning:progressStep label="Step 2" value="s2"/>
+        <lightning:progressStep label="Step 3" value="s3"/>
+        <lightning:progressStep label="Step 4" value="s4"/>
+    </lightning:progressIndicator>
+    <lightning:button label="Next step" onclick="{!c.nextStep}"/>
+    <lightning:button label="Show error" onclick="{!c.addError}"/>
+</aura:component>

@@ -1,7 +1,7 @@
 public with sharing class ContactListView {
     @AuraEnabled(cacheable=true)
     public static PaginationWrapper getContacts(Id accountId, Integer pageSize, Integer pageNumber, String searchTerm) {
-        String query = 'SELECT Id, Name FROM Contact WHERE AccountId != NULL';
+        String query = 'SELECT Id, Name ,Email,Phone FROM Contact WHERE AccountId != NULL';
         
         if (!String.isBlank(searchTerm)) {
             query += ' AND Name LIKE \'%' + String.escapeSingleQuotes(searchTerm) + '%\'';

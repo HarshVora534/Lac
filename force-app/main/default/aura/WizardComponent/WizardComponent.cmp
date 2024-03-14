@@ -1,0 +1,32 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable" access="global">
+    <aura:attribute name="currentStep" type="Integer" default="1"/>
+    <aura:attribute name="accountId" type="Id"/>
+    <aura:attribute name="contactId" type="Id"/>
+    <aura:attribute name="eventId" type="Id"/>
+    <aura:attribute name="isSaveDisabled" type="Boolean" default="true"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    <lightning:progressIndicator currentStep="{!v.currentStep}" type="path" variant="base">
+        <lightning:progressStep label="Account Details" value="1"/>
+        <lightning:progressStep label="Contact Details" value="2"/>
+        <lightning:progressStep label="Event Creation" value="3"/>
+    </lightning:progressIndicator>
+    
+    <aura:if isTrue="{!v.currentStep == 1}">
+        <aura:handler name="upload" event="c:fileUploadComplete" action="{!c.handleUploadComplete}"/>
+        <c:imagePreview/>
+        <c:AccountForm />
+    </aura:if>
+    
+    <aura:if isTrue="{!v.currentStep == 2}">
+        <c:ContactForm accountId="{!v.accountId}" onSuccess="{!c.handleContactSuccess}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.currentStep == 3}">
+        <c:EventForm contactId="{!v.contactId}" disabled="{!v.isSaveDisabled}" onSuccess="{!c.handleEventSuccess}"/>
+    </aura:if>
+    
+    <lightning:button label="Previous" onclick="{!c.previousStep}" disabled="{!v.currentStep == 1}"/>
+    <lightning:button label="Next" onclick="{!c.nextStep}" disabled="{!v.currentStep == 3}"/>
+</aura:component>

@@ -30,3 +30,32 @@
         $A.enqueueAction(action);
     }
 })
+
+
+// ({
+//     init: function(component, event, helper) {
+//         // Initialization logic here
+//         // You can perform any initialization tasks here if needed
+//     },
+//     previousStep: function(component, event, helper) {
+//         // Logic to navigate to previous step
+//         var currentStep = component.get("v.currentStep");
+//         if (currentStep > 1) {
+//             component.set("v.currentStep", currentStep - 1);
+//         }
+//     },
+//     nextStep: function(component, event, helper) {
+//         // Logic to navigate to next step
+//         var currentStep = component.get("v.currentStep");
+//         if (currentStep < 3) {
+//             component.set("v.currentStep", currentStep + 1);
+//         }
+//     },
+//     saveEvent: function(component, event, helper) {
+//         // Logic to save the event
+//         // You can implement the logic to save the event record here
+//         // For example, you can use lightning:recordEditForm to handle record submission
+//         var recordEditForm = component.find('recordEditForm');
+//         recordEditForm.submit();
+//     }
+// })

@@ -1,0 +1,7 @@
+<aura:component>
+
+    <div onkeyup="{!c.handleKeyUp}">
+        <lightning:input type="search" label="Search for Accounts" name="search" aura:id="searchid"/>
+    </div>
+
+</aura:component>	

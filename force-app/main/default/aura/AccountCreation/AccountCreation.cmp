@@ -1,9 +1,31 @@
-<aura:component implements="force:appHostable">
-    <aura:attribute name="newAccount" type="Object" default="{'sobjectType':'Account'}"/>
-    
-    <lightning:input label="Account Name" value="{!v.newAccount.Name}"/>
-    <lightning:input label="Email" value="{!v.newAccount.Email__c}"/>
-    <lightning:input label="ExternalId" value="{!v.newAccount.Externalid__c}"/>
-    
-    <lightning:button label="createAccount" onclick="{!c.createAccount}"/>
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable" controller="AccountController">
+    <!-- <aura:attribute name="newAccount" type="Account" default="{'sobjectType':'Account','Name':'','Email__c':'','Externalid__c':''}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"></aura:handler>   -->
+    <aura:attribute name="newAccount" type="Account" 
+     default="{ 'sobjectType': 'ExpenseAccountc',
+                     'Name': '',
+                   }"/>
+<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+<div>
+    <form>
+        
+        
+        <ui:inputText aura:id="AccountName" label="New Account Name"
+                        class="slds-input"
+                        labelClass="slds-form-element__label"
+                        value="{!v.newAccount.Name}"
+                        required="true"/>
+        
+        <ui:button label="Submit" 
+                       class="slds-button slds-button--neutral"
+                       labelClass="label"
+                       press="{!c.createAccount}"/>
+              <ui:button label="Cancel" 
+                       class="slds-button slds-button--neutral"
+                       labelClass="label"
+                       press="{!c.Close}"/>
+           
+    </form>
+  </div>
 </aura:component>
+

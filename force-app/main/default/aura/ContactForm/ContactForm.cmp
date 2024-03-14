@@ -1,0 +1,13 @@
+<aura:component>
+    <aura:attribute name="accountId" type="Id"/>
+    <lightning:recordForm objectApiName="Contact" mode="edit" 
+                          onsuccess="{!c.handleSuccess}"
+                          fields="['AccountId','LastName']"
+                          recordTypeId="{!v.recordTypeId}">
+        <aura:if isTrue="{!v.accountId}">
+            <aura:set attribute="formFields">
+                <lightning:inputField fieldName="AccountId" value="{!v.accountId}" />
+            </aura:set>
+        </aura:if>
+    </lightning:recordForm>
+</aura:component>

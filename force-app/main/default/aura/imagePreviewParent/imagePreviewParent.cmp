@@ -3,6 +3,9 @@
     <aura:handler name="upload" event="c:fileUploadComplete" action="{!c.handleUploadComplete}"/>
     <c:imagePreview/>
     <aura:if isTrue="{!not(empty(v.imageURL))}">
+        <h1>ChildParentRelationship</h1>
         <img src="{!v.imageURL}" style="max-width: 100%;"/>
     </aura:if>
 </aura:component>
+
+<!-- In Account -->

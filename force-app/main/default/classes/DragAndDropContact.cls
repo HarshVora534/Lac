@@ -100,12 +100,14 @@ public with sharing class DragAndDropContact {
             results.add(new SearchResult(acc, relatedContacts));
         }
         return results;
-    }
-                        
+    }   
+
     @AuraEnabled
     public static void updateParentAccount(Id accountId, Id contactId){
         try {
+            System.debug('Accountid--> '+accountId+'Contactid--> '+contactId);
             Contact contactToUpdate = [SELECT Id, AccountId FROM Contact WHERE Id = :contactId LIMIT 1];
+            System.debug('--->'+ contactToUpdate);            
             if(contactToUpdate != null) {
                 contactToUpdate.AccountId = accountId;
                 update contactToUpdate;
@@ -116,5 +118,6 @@ public with sharing class DragAndDropContact {
             throw new AuraHandledException(e.getMessage());
         }
     }
-    
+
+        
 }

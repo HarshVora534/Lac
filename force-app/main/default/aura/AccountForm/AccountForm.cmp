@@ -1,0 +1,4 @@
+<aura:component>
+    <lightning:recordForm objectApiName="Account" mode="edit" 
+                          onSuccess="{!c.handleSuccess}"/>
+</aura:component>

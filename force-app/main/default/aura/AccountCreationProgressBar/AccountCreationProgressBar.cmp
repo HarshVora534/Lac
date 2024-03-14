@@ -2,7 +2,14 @@
     <aura:attribute name="currentStep" type="Integer" default="1"/>
     <aura:attribute name='fields' type='String[]' default="['Name','Email__c','Externalid__c']"/>
     <aura:attribute name='fieldscon' type='String[]' default="['AccountId','LastName']"/>
+    <aura:attribute name="feildsevent" type="String[]" default="['WhoId','Subject','DateTime']"/>
+
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <lightning:progressIndicator currentStep="{!v.currentStep}" type="path" variant="base">
+        <lightning:progressStep label="AccountDetails" value="1"/>
+        <lightning:progressStep label="ContactDetails" value="2"/>
+        <lightning:progressStep label="EventCreation" value="3"/>
+    </lightning:progressIndicator>
     
     <aura:if isTrue="{!v.currentStep == 1}">
         <lightning:recordForm objectApiName="Account" fields="{!v.fields}" mode="edit" recordId="{!v.accountId}"/>
@@ -13,7 +20,7 @@
     </aura:if>
     
     <aura:if isTrue="{!v.currentStep == 3}">
-        <lightning:recordForm objectApiName="Event" fields="{!v.fields}" mode="edit" recordId="{!v.eventId}"/>
+        <lightning:recordForm objectApiName="Event" fields="{!v.fieldsevent}" mode="edit" recordId="{!v.eventId}"/>
         <lightning:button variant="brand" label="Save" onclick="{!c.saveEvent}"/>
     </aura:if>
     
@@ -21,11 +28,37 @@
     <lightning:button label="Next" onclick="{!c.nextStep}" disabled="{!v.currentStep == 3}"/>
 </aura:component>
 
-<!-- <aura:component>
-    <lightning:progressIndicator currentStep="3" type="base" hasError="true" variant="base">
-        <lightning:progressStep label="Step 1" value="1"/>
-        <lightning:progressStep label="Step 2" value="2"/>
-        <lightning:progressStep label="Step 3" value="3"/>
-        <lightning:progressStep label="Step 4" value="4"/>
+
+
+
+<!-- <aura:component implements="flexipage:availableForAllPageTypes, flexipage:availableForRecordHome, force:hasRecordId, force:appHostable" access="global">
+    <aura:attribute name="currentStep" type="Integer" default="1"/>
+    <aura:attribute name='fields' type='String[]' default="['Name','Email__c','Externalid__c']"/>
+    <aura:attribute name='fieldscon' type='String[]' default="['AccountId','LastName']"/>
+    <aura:attribute name="fieldsEvent" type="String[]" default="['Field1__c', 'Field2__c']"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    <lightning:progressIndicator currentStep="{!v.currentStep}" type="path" variant="base">
+        <lightning:progressStep label="AccountDetails" value="1"/>
+        <lightning:progressStep label="ContactDetails" value="2"/>
+        <lightning:progressStep label="EventCreation" value="3"/>
     </lightning:progressIndicator>
-</aura:component> -->
+    
+    <aura:if isTrue="{!v.currentStep == 1}">
+        <lightning:recordForm aura:id="accountForm" objectApiName="Account" fields="{!v.fields}" mode="edit" recordId="{!v.accountId}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.currentStep == 2}">
+        <lightning:recordForm aura:id="contactForm" objectApiName="Contact" fields="{!v.fieldscon}" mode="edit" recordId="{!v.contactId}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.currentStep == 3}">
+        <lightning:recordForm aura:id="eventForm" objectApiName="Event" fields="{!v.fieldsEvent}" mode="edit" recordId="{!v.eventId}"/>
+        <lightning:button variant="brand" label="Save" onclick="{!c.saveEvent}"/>
+    </aura:if>
+    
+    <lightning:button label="Previous" onclick="{!c.previousStep}" disabled="{!v.currentStep == 1}"/>
+    <lightning:button label="Next" onclick="{!c.nextStep}" disabled="{!v.currentStep == 3}"/>
+</aura:component>
+ -->

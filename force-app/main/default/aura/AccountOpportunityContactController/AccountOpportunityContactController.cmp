@@ -4,7 +4,7 @@
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     
-    <table>
+    <table style="border:1px solid Black">
         <thead>
             <tr>
                 <th>Account Name</th>

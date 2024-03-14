@@ -72,6 +72,12 @@
     <aura:attribute name="searchResults2" type="List" />
     <aura:attribute name="contactCount1" type="Integer" />
     <aura:attribute name="contactCount2" type="Integer" />
+    <aura:attribute name="contact" type="Object" />
+    <aura:attribute name="contactid" type="String" />
+    <aura:attribute name="newAccountid" type="String" />
+    <!-- <div data-contactid="{!v.contact.Id}">
+        {!v.contact.Name}
+    </div> -->
     
     <div style="display: flex;justify-content:space-evenly">
         <div style="border:2px solid black">
@@ -89,7 +95,7 @@
                             <br></br>
                             <div style="padding-top: 5px;margin:5px">
                                 <aura:iteration items="{!result.relatedContacts}" var="contact">
-                                    <div ondragstart="{!c.handleDragStart}" data-parentaccount="{!contact.AccountId}" draggable="true">{!contact.Name}</div>
+                                    <div ondragstart="{!c.handleDragStart}" id="{!contact.Id}" draggable="true">{!contact.Name}</div>
                                 </aura:iteration>
                             </div>
                         </div>
@@ -109,13 +115,13 @@
             </div>
             <p style="font-size: 30px;font-weight:500;padding-top:20px">Contact Count: {!v.contactCount2}</p>
             <aura:if isTrue="{!not(empty(v.searchResults2))}">
-                <div style="margin: 10px;" ondrop="{!c.handleDrop}" ondragover="{!c.allowDrop}" class="dropzone">
+                <div style="margin: 10px;" class="dropzone" >
                     <aura:iteration items="{!v.searchResults2}" var="result">
-                        <div style="border:2px solid Black;border-radius:5px">
+                        <div ondrop="{!c.handleDrop}"  ondragover="{!c.allowDrop}" accid="{!result.account.Id}" style="border:2px solid Black;border-radius:5px">
                             <h3><b>{!result.account.Name}:-</b></h3>
                             <br></br>
                             <div style="padding-top: 5px;margin:5px">
-                                <aura:iteration items="{!result.relatedContacts}" var="contact">
+                                <aura:iteration items="{!result.relatedContacts}" var="contact"  >
                                     <div>{!contact.Name}</div>
                                 </aura:iteration>
                             </div>
