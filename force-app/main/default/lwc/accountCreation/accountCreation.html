@@ -10,11 +10,12 @@
 
 <template>
     <lightning-card title="Record with Field Integrity" icon-name="standard:account">
-            <div class="slds-p-around_x-small">
+            <!-- <div class="slds-p-around_x-small">
                 <lightning-input label="Name" value={rec.Name} onchange={handleNameChange}></lightning-input>
                 <lightning-input type="number" label="ExternalId" value={rec.externalid} onchange={handleExternaidChange}></lightning-input>
                 <lightning-input type="Email" label="Email" value={rec.email} onchange={handleEmailChange}></lightning-input><br/>
                 <lightning-button label="Save" onclick={handleClick}></lightning-button>
-            </div>
+            </div> -->
+            <lightning-record-form object-api-name="Contact" mode="edit" onsubmit={handleSubmit}></lightning-record-form>
         </lightning-card>
 </template>
