@@ -1,0 +1,6 @@
+<template>
+    <c-file-Uploader-Child file-url={fileUrl} onfileselected={handleFileSelected}></c-file-Uploader-Child>
+    <div class="slds-form-element">
+        <img if:true={fileUrl} src={fileUrl} />
+    </div>    
+</template>
