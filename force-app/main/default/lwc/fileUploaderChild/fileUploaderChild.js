@@ -5,6 +5,6 @@ export default class FileUploaderChild extends LightningElement {
 
     handleUploadFinished(event)
     {
-
+        
     }
 }
