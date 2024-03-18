@@ -1,7 +1,9 @@
 <template>
-    <h1 style="text-align:center ;font-size:larger;font-weight:bolder;background-color:White">LWC</h1>
+    <div style="border: 5px solid BLack;">
+    <div style="text-align: center; font-weight:bolder;background-color:white">LWC (Task 2) Preview Image</div>    
     <c-file-Uploader-Child  onfileselected={handleFileSelected}></c-file-Uploader-Child>
     <div class="slds-form-element">
         <img if:true={fileUrl} style="border:5px solid Black" src={fileUrl} />
-    </div>    
+    </div>   
+    </div> 
 </template>

@@ -1,4 +1,6 @@
 <template>
+    <div style="border: 5px solid BLack;">
+    <div style="text-align: center; font-weight:bolder;background-color:white">LWC (Task 4) DropDown</div>
     <lightning-combobox
         name="account"
         label="Select an Account for getting the List of Contact and Opportunity related to it"
@@ -6,4 +8,5 @@
         options={accountOptions}
         onchange={handleChange}>
     </lightning-combobox>
+    </div>
 </template>
