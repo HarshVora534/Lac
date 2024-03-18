@@ -1,13 +1,10 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, track } from 'lwc';
 
-export default class fileUploaderParent2 extends LightningElement {
-    previewImage;
+export default class FileUploaderParent2 extends LightningElement {
+    @track fileUrls = [];
 
-    handleUploadFinished(event) {
-        const uploadedFiles = event.detail.files;
-        if (uploadedFiles.length > 0) {
-            const imageUrl = uploadedFiles[0].documentId;
-            this.previewImage = `/services/preview/${imageUrl}`;
-        }
+    handleFileSelected(event) {
+        const file = event.detail.file;
+        this.fileUrls.push(URL.createObjectURL(file));
     }
 }

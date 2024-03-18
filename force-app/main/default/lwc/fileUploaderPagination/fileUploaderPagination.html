@@ -1,0 +1,59 @@
+<!-- <template>
+    <lightning-card title="File Uploader">
+        <lightning-layout>
+            <lightning-layout-item size="12">
+                <lightning-input type="file" label="Upload File" onchange={handleFileChange}></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+        <template if:true={files.length}>
+            <lightning-layout>
+                <lightning-layout-item size="12">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={displayedFiles}
+                        columns={columns}
+                        hide-checkbox-column
+                        ></lightning-datatable>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <lightning-pagination
+                        active-page={currentPage}
+                        page-size={pageSize}
+                        total-items={totalFiles}
+                        onpagechange={handlePageChange}>
+                    </lightning-pagination>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+    </lightning-card>
+</template> -->
+
+
+<template>
+    <div style="border: 5px solid BLack;">
+    <div class="slds-form-element">
+        <h1>fileUploaderPagination</h1>
+        <lightning-input type="file" label="Upload PDF File" onchange={handleFileUpload} multiple>
+        </lightning-input>
+    </div>
+
+    <template if:true={fileNames}>
+        <lightning-layout>
+            <template for:each={pagedFileNames} for:item="fileName">
+                <lightning-layout-item key={fileName} size="3">
+                    <div class="slds-p-around_small">{fileName}</div>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
+
+        <lightning-layout if:true={showPagination}>
+            <lightning-layout-item size="12">
+                <lightning-button-group>
+                    <lightning-button label="Previous" onclick={previousPage} disabled={disablePrevious}></lightning-button>
+                    <lightning-button label="Next" onclick={nextPage} disabled={disableNext}></lightning-button>
+                </lightning-button-group>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+</div>
+</template>

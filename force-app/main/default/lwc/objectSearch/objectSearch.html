@@ -1,0 +1,56 @@
+<!-- <template>
+    <lightning-card title="Search and Display Objects">
+        <div class="slds-p-around_medium">
+            <lightning-layout>
+                <lightning-layout-item size="6">
+                    <lightning-input label="Search" type="search" value={searchTerm} onchange={handleSearchChange}></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-dual-listbox label="Select Objects" source-label="Available" selected-label="Selected" options={objectOptions} value={selectedObjects} onchange={handleObjectChange}></lightning-dual-listbox>
+                </lightning-layout-item>
+            </lightning-layout>
+            <div class="slds-m-top_medium">
+                <lightning-button label="Search" onclick={handleSearch}></lightning-button>
+            </div>
+            <template if:true={searchResults}>
+                <template for:each={searchResults} for:item="objectData">
+                    <div key={objectData.objectName}>
+                        <h3>{objectData.objectName}</h3>
+                        <template for:each={objectData.records} for:item="record">
+                            <p key={record.Id}>{record.Name}</p>
+                        </template>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template> -->
+
+
+<template>
+    <lightning-card title="Search Objects">
+        <div class="slds-p-around_medium">
+            <lightning-layout>
+                <lightning-layout-item size="6" padding="around-small">
+                    <lightning-input type="search" label="Search" value={searchTerm} onchange={handleSearchTermChange}></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="6" padding="around-small">
+                    <lightning-dual-listbox label="Select Objects" source-label="Available" selected-label="Selected" options={objectOptions} value={selectedObjects} onchange={handleObjectSelection}></lightning-dual-listbox>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-button variant="brand" label="Search" onclick={handleSearch}></lightning-button>
+        </div>
+        <template if:true={searchResults}>
+            <div class="slds-p-around_medium">
+                <template for:each={searchResults} for:item="result">
+                    <lightning-card key={result.Id} title={result.Name}>
+                        <div class="slds-p-horizontal_small">
+                            <p>Object: {result.attributes.type}</p> 
+                            <p>Record ID: {result.Id}</p>
+                        </div>
+                    </lightning-card>
+                </template>
+            </div>
+        </template>
+    </lightning-card>
+</template>

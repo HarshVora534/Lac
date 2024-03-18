@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title="File Uploader">
+        <lightning-layout>
+            <lightning-layout-item size="12">
+                <lightning-input type="file" label="Upload File" onchange={handleFileChange}></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+        <template if:true={files.length}>
+            <lightning-layout>
+                <lightning-layout-item size="12">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={displayedFiles}
+                        columns={columns}
+                        hide-checkbox-column
+                        ></lightning-datatable>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <lightning-pagination
+                        active-page={currentPage}
+                        page-size={pageSize}
+                        total-items={totalFiles}
+                        onpagechange={handlePageChange}>
+                    </lightning-pagination>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+    </lightning-card>
+</template>

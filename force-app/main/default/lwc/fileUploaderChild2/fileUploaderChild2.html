@@ -1,7 +1,10 @@
 <template>
-    <lightning-card title="Image Preview">
-        <div class="slds-m-around_medium">
-            <img src={imageUrl} alt="Uploaded Image" style="max-width: 100%;" />
-        </div>
-    </lightning-card>
+    <div class="slds-form-element">
+        <input type="file" accept=".pdf" onchange={handleFileUpload} multiple>
+    </div>
+    <template if:true={fileNames}>
+        <template for:each={fileNames} for:item="fileName">
+            <h1 key={fileName}>{fileName}</h1>
+        </template>
+    </template>
 </template>
