@@ -21,22 +21,72 @@ public with sharing class listOfObjects {
             String label = obj.getDescribe().getLabel();
             allobjects.put(name, label);
         }
+        System.debug(allObjects);
         return allobjects;
     }
 
     @AuraEnabled(cacheable = true)
-    public static List<SObject> fetchSearchResults(String searchTerm, String selectedObjectsString) {
-        List<String> selectedObjects = (List<String>) JSON.deserialize(selectedObjectsString, List<String>.class);
-        List<SObject> results = new List<SObject>();
-
-        for (String objectApiName : selectedObjects) {
-            String query = 'SELECT Id, Name FROM ' + objectApiName;
-            if (!String.isBlank(searchTerm)) {
-                query += ' WHERE Name LIKE \'%' + String.escapeSingleQuotes(searchTerm) + '%\'';
+    public static Map<String, List<String>> fetchAllFields() {
+        Map<String, List<String>> allFields = new Map<String, List<String>>();
+        Map<String, String> allObjects = fetchAllObjects();
+            for (String objName : allObjects.keySet()) {
+                List<String> fields = new List<String>();
+                for (Schema.SObjectField field : Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().Values()) {
+                    fields.add(field.getDescribe().getName());
+                }
+                allFields.put(objName, fields);
             }
-            results.addAll(Database.query(query));
+            System.debug(allFields);
+            return allFields;
         }
+    
+    
 
-        return results;
+    // @AuraEnabled(cacheable = true)
+    // public static List<SObject> fetchSearchResults(String searchTerm, String selectedObjectsString) {
+    //     List<String> selectedObjects = (List<String>) JSON.deserialize(selectedObjectsString, List<String>.class);
+    //     List<SObject> results = new List<SObject>();
+
+    //     for (String objectApiName : selectedObjects) {
+    //         String query = 'SELECT Id, Name FROM ' + objectApiName;
+    //         if (!String.isBlank(searchTerm)) {
+    //             query += ' WHERE Name LIKE \'%' + String.escapeSingleQuotes(searchTerm) + '%\'';
+    //         }
+    //         results.addAll(Database.query(query));
+    //     }
+
+    //     return results;
+    // }
+    @AuraEnabled(cacheable = true)
+    public static List<SObject> fetchSearchResults(String searchTerm, String selectedObjectsString) {
+    List<String> selectedObjects = (List<String>) JSON.deserialize(selectedObjectsString, List<String>.class);
+    List<SObject> results = new List<SObject>();
+
+    for (String objectApiName : selectedObjects) {
+        List<String> fields = fetchAllFields().get(objectApiName);
+        if (fields == null || fields.isEmpty()) {
+            continue;
+        }
+        
+        String query = 'SELECT Id';
+        for (String field : fields) {
+            query += ', ' + field;
+        }
+        query += ' FROM ' + objectApiName;
+        
+        if (!String.isBlank(searchTerm)) {
+            String searchTermEscaped = String.escapeSingleQuotes(searchTerm);
+            String whereClause = ' WHERE ';
+            for (String field : fields) {
+                whereClause += field + ' LIKE \'%' + searchTermEscaped + '%\' OR ';
+            }
+            whereClause = whereClause.removeEnd(' OR ');
+            query += whereClause;
+        }
+        
+        results.addAll(Database.query(query));
     }
+
+    return results;
+}
 }
