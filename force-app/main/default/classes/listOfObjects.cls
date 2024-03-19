@@ -32,8 +32,10 @@ public with sharing class listOfObjects {
             for (String objName : allObjects.keySet()) {
                 List<String> fields = new List<String>();
                 for (Schema.SObjectField field : Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().Values()) {
+                    // System.debug(field.getDescribe().getName());
                     fields.add(field.getDescribe().getName());
                 }
+                // System.debug(fields);
                 allFields.put(objName, fields);
             }
             System.debug(allFields);

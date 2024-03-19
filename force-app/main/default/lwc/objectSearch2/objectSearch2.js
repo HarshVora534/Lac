@@ -10,35 +10,32 @@ export default class ObjectSearch2 extends LightningElement {
     searchTerm = '';
 
     @wire(fetchAllObjects)
-    wiredObjects({error,data})
-    {
-        if(data)
-        {
-            this.objectOptions = Object.keys(data).map(key=>({label :data[key] , value :key}));
-        }
-        else
-        {
-            console.log('Error WHile fetching Objects');
+    wiredObjects({ error, data }) {
+        if (data) {
+            this.objectOptions = Object.keys(data).map(key => ({ label: data[key], value: key }));
+        } else {
+            console.log('Error while fetching Objects');
         }
     }
 
     @wire(fetchAllFields)
-    wiredfeilds({error,data})
-    {
-        if(data)
-        {
-            this.selectedFields = data;
-            console.log(this.selectedFields);
-        }
-        else
-        {
-            console.log('Error While fetching Feilds')
+    wiredFields({ error, data }) {
+        if (data) {
+            this.selectedFields = Object.entries(data).map(([objectName, fields]) => ({
+                objectName,
+                fields: fields.map(field => ({
+                    fieldName: field.fieldName,
+                    fieldLabel: field.fieldLabel
+                }))
+            }));
+            console.log('-->',this.selectedFields);
+        } else {
+            console.log('Error while fetching Fields');
         }
     }
 
-    handleObjectSelection(event)
-    {
-        this.selectedObjects=event.detail.value;
+    handleObjectSelection(event) {
+        this.selectedObjects = event.detail.value;
     }
 
     handleSearchTermChange(event) {
@@ -46,9 +43,7 @@ export default class ObjectSearch2 extends LightningElement {
     }
 
     handleSearch() {
-        const selectedFeildsString = JSON.stringify(this.selectedFields);
-        console.log('-->',selectedFeildsString);
-        fetchSearchResults({ searchTerm: this.searchTerm, selectedFeildsString })
+        fetchSearchResults({ searchTerm: this.searchTerm, selectedObjectsString: JSON.stringify(this.selectedObjects) })
             .then(result => {
                 console.log('Search Results:', result);
             })
