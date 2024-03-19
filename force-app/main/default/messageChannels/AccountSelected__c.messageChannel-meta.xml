@@ -4,6 +4,6 @@
     <isExposed>true</isExposed>
     <description>Message Channel for Account selection</description>
     <lightningMessageFields>
-        <fieldName>recordId</fieldName>
+        <fieldName>accountId</fieldName>
     </lightningMessageFields>
 </LightningMessageChannel>

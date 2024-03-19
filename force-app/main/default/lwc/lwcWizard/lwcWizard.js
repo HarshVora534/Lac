@@ -66,8 +66,8 @@ export default class LwcWizard extends LightningElement {
     {
         this.emailDraft=event.detail.value;
     }
-    async handleSendEmail(event)
-    {
-        await SendEmail({records:this.selectedRecords,emailbody: this.emailDraft});
+    async handleSendEmail(event) {
+        await sendEmail({ records: JSON.stringify(this.selectedRecords), emailBody: this.emailDraft });
     }
+    
 }

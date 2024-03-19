@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <lightning-card title="Search Object Related data">
         <lightning-layout>
             <lightning-layout-item padding="around-small" size="6">
@@ -39,5 +39,53 @@
                 </template>
             </div>
         </template>
+    </lightning-card>
+</template> -->
+
+<template>
+    <lightning-card title="Search Object Related data">
+        <lightning-layout>
+            <lightning-layout-item padding="around-small" size="6">
+                <div>
+                    <lightning-dual-listbox label="Search Objects related Data" 
+                                            value={selectedObjects} 
+                                            options={objectOptions} 
+                                            source-label="Available" 
+                                            selected-label="Selected" 
+                                            onchange={handleObjectSelection}>
+                    </lightning-dual-listbox>
+                </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item padding="around-small" size="6">
+                <lightning-input type="search"
+                                 label="Search here"
+                                 value={searchTerm}
+                                 onchange={handleSearchTermChange}>
+                </lightning-input>
+                <lightning-button label="Search"
+                                  variant="brand"
+                                  onclick={handleSearch}>
+                </lightning-button>
+                
+                <template if:true={searchResults}>
+                    <div class="slds-p-around_medium">
+                        <template for:each={searchResults} for:item="result">
+                            <lightning-card key={result.Id} title={result.Name}>
+                                <div class="slds-p-horizontal_small">
+                                    <template if:true={result.type}>
+                                        <p>Object: {result.type}</p> 
+                                    </template>
+                                    <p>Record ID: {result.Id}</p>
+                                    <!-- Display the Name field -->
+                                    <p>Name: {result.Name}</p>
+                                </div>
+                            </lightning-card>
+                        </template>
+                    </div>
+                </template>
+
+            </lightning-layout-item>
+        </lightning-layout> 
     </lightning-card>
 </template>
