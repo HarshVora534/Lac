@@ -1,70 +1,12 @@
-<!-- <aura:component>
-    <aura:attribute name="AccObj" type="Account" default="('sobjectType':'Account',
-                                                            'Name':'',
-                                                            'Email__c':'')">
-    </aura:attribute>
-
-    <lightning:input value="{!v.AccObj.Name}" label="Name" placeholder="Enter your name"></lightning:input>
-    <lightning:input value="{!v.AccObj.Email__c}" label="Email" placeholder="Enter your mail address"></lightning:input>
-
-    <lightning:button variant="brand" label="Save Record" title="Save" onclick="{!c.doSave}"></lightning:button>
-</aura:component> -->
-
-<!-- <aura:component controller="CreateContactcls" implements="force:appHostable,flexipage:availableForAllPageTypes">
-
-    <aura:attribute name="contactObj" type="Contact" default="('sobjectType':'Contact',
-                                                                'FirstName':'',
-                                                                'LastName':'',
-                                                                'Phone':'')">
-    </aura:attribute>
-    <aura:attribute name="contactId" type="String"></aura:attribute>
-    <lightning:input value="{!v.contactObj.FirstName}" label="First Name" placeholder="Enter your First Name"></lightning:input>
-    <lightning:input value="{!v.contactObj.LastName}" label="Last Name" placeholder="Enter your Last Name"></lightning:input>
-    <lightning:input value="{!v.contactObj.Phone}" label="Phone" placeholder="Enter Phone..."></lightning:input>
-
-    <lightning:button variant="brand" label="Save" title="Save" onclick="{!c.doSave}"></lightning:button>
-</aura:component> -->
-
-
-
-<aura:component controller="CreateAccount" implements="force:appHostable,flexipage:availableForAllPageTypes">
-
-    <aura:attribute name="createAcc" type="Account" default="{'sObjectType' : 'Account','Name' :'','Rating' : ''}"/>
-
-    <aura:attribute name="objName" type="String" default="Account"/>
-
-    <aura:attribute name="fldName" type="String" default="Rating"/>
-
-    <aura:attribute name="ratingList" type="List"/>
-
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-
-    <div class="slds-p-around_small">
-
-        <lightning:input type="text" label="Name" value="{!v.createAcc.Name}"/>
-
-        <lightning:input type="text" label="Account Number" value="{!v.createAcc.AccountNumber}"/>
-
-        <lightning:input type="Email" name="email2" value="{!v.createAcc.Email}" label="Email ID"/>
-
-        <lightning:input type="Phone" label="Phone Number" value="{!v.createAcc.Phone}"/>
-
-        <lightning:select label="Rating" value="{!v.createAcc.Rating}">
-
-            <option value="">—None—</option>
-
-            <aura:iteration items="{!v.ratingList}" var="ac">
-
-                <option value="{!ac}">{!ac}</option>
-
-            </aura:iteration>
-
-        </lightning:select>
-
-        <lightning:button label="Save" iconPosition="left" variant="brand" onclick="{!c.doSave}"/>
-
-        <lightning:button label="Cancel" iconPosition="right" variant="destructive" onclick="{!c.docancel}"/>
-
-    </div>
-
+<aura:component controller="CreateAccount" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable" access="global">
+    <aura:attribute name="con" type="Contact" default="{ 'sobjectType': 'Contact' }"/>
+    <aura:attribute name="eventObj" type="Event" default="{ 'sobjectType': 'Event' }"/>
+    
+    <lightning:recordForm objectApiName="Contact" recordId="{!v.recordId}" 
+                          fields="['FirstName','LastName','Email']" mode="edit" 
+                          targetFields="{!v.con}" />
+    
+    <lightning:input label="Event Subject" value="{!v.eventObj.Subject}"/>
+    <lightning:input type="datetime" label="Event Date" value="{!v.eventObj.StartDateTime}"/>
+    <lightning:button variant="brand" label="Create Contact and Event" onclick="{!c.createContactAndEvent}"/>
 </aura:component>

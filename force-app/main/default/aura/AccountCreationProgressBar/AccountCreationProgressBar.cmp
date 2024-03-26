@@ -1,74 +1,10 @@
-<!-- <aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId ,force:appHostable" access="global">
+ <!-- <aura:component controller="CreateAccount" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable" access="global">
     <aura:attribute name="currentStep" type="Integer" default="1"/>
-    <aura:attribute name='fields' type='String[]' default="['Name','Email__c','Externalid__c']"/>
+    <aura:attribute name='fields' type='String[]' default="['Name','Email__c','ExternalId__c']"/>
     <aura:attribute name='fieldscon' type='String[]' default="['AccountId','LastName']"/>
-    <aura:attribute name="feildsevent" type="String[]" default="['WhoId','Subject','DateTime']"/>
-
-    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
-    <lightning:progressIndicator currentStep="{!v.currentStep}" type="path" variant="base">
-        <lightning:progressStep label="AccountDetails" value="1"/>
-        <lightning:progressStep label="ContactDetails" value="2"/>
-        <lightning:progressStep label="EventCreation" value="3"/>
-    </lightning:progressIndicator>
-    
-    <aura:if isTrue="{!v.currentStep == 1}">
-        <lightning:recordForm objectApiName="Account" fields="{!v.fields}" mode="edit" recordId="{!v.accountId}"/>
-    </aura:if>
-    
-    <aura:if isTrue="{!v.currentStep == 2}">
-        <lightning:recordForm objectApiName="Contact" fields="{!v.fieldscon}" mode="edit" recordId="{!v.contactId}"/>
-    </aura:if>
-    
-    <aura:if isTrue="{!v.currentStep == 3}">
-        <lightning:recordForm objectApiName="Event" fields="{!v.fieldsevent}" mode="edit" recordId="{!v.eventId}"/>
-        <lightning:button variant="brand" label="Save" onclick="{!c.saveEvent}"/>
-    </aura:if>
-    
-    <lightning:button label="Previous" onclick="{!c.previousStep}" disabled="{!v.currentStep == 1}"/>
-    <lightning:button label="Next" onclick="{!c.nextStep}" disabled="{!v.currentStep == 3}"/>
-</aura:component> -->
-
-
-
-
-<!-- <aura:component implements="flexipage:availableForAllPageTypes, flexipage:availableForRecordHome, force:hasRecordId, force:appHostable" access="global">
-    <aura:attribute name="currentStep" type="Integer" default="1"/>
-    <aura:attribute name='fields' type='String[]' default="['Name','Email__c','Externalid__c']"/>
-    <aura:attribute name='fieldscon' type='String[]' default="['AccountId','LastName']"/>
-    <aura:attribute name="fieldsEvent" type="String[]" default="['Field1__c', 'Field2__c']"/>
-    
-    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
-    
-    <lightning:progressIndicator currentStep="{!v.currentStep}" type="path" variant="base">
-        <lightning:progressStep label="AccountDetails" value="1"/>
-        <lightning:progressStep label="ContactDetails" value="2"/>
-        <lightning:progressStep label="EventCreation" value="3"/>
-    </lightning:progressIndicator>
-    
-    <aura:if isTrue="{!v.currentStep == 1}">
-        <lightning:recordForm aura:id="accountForm" objectApiName="Account" fields="{!v.fields}" mode="edit" recordId="{!v.accountId}"/>
-    </aura:if>
-    
-    <aura:if isTrue="{!v.currentStep == 2}">
-        <lightning:recordForm aura:id="contactForm" objectApiName="Contact" fields="{!v.fieldscon}" mode="edit" recordId="{!v.contactId}"/>
-    </aura:if>
-    
-    <aura:if isTrue="{!v.currentStep == 3}">
-        <lightning:recordForm aura:id="eventForm" objectApiName="Event" fields="{!v.fieldsEvent}" mode="edit" recordId="{!v.eventId}"/>
-        <lightning:button variant="brand" label="Save" onclick="{!c.saveEvent}"/>
-    </aura:if>
-    
-    <lightning:button label="Previous" onclick="{!c.previousStep}" disabled="{!v.currentStep == 1}"/>
-    <lightning:button label="Next" onclick="{!c.nextStep}" disabled="{!v.currentStep == 3}"/>
-</aura:component>
- -->
-
-
- <aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable" access="global">
-    <aura:attribute name="currentStep" type="Integer" default="1"/>
-    <aura:attribute name='fields' type='String[]' default="['Name','Email__c','Externalid__c']"/>
-    <aura:attribute name='fieldscon' type='String[]' default="['AccountId','LastName']"/>
-    <aura:attribute name="fieldsevent" type="String[]" default="['WhoId','Subject','DateTime']"/>
+    <aura:attribute name="fieldsevent" type="Map" default="{'WhoId':'', 'Subject':'', 'StartDateTime':''}"/>
+    <aura:attribute name="eventDetails" type="Object" default="{}"/>
+    <aura:attribute name="contactId" type="Id" />
 
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
 
@@ -79,21 +15,55 @@
     </lightning:progressIndicator>
 
     <aura:if isTrue="{!v.currentStep == 1}">
-        <lightning:recordForm objectApiName="Account" fields="{!v.fields}" mode="edit" recordId="{!v.recordId}"/>
+        <lightning:recordForm objectApiName="Account" fields="{!v.fields}" mode="edit"/>
     </aura:if>
 
     <aura:if isTrue="{!v.currentStep == 2}">
-        <lightning:recordForm objectApiName="Contact" fields="{!v.fieldscon}" mode="edit" recordId="{!v.recordId}"/>
+        <lightning:recordForm objectApiName="Contact" fields="{!v.fieldscon}" mode="edit"/>
     </aura:if>
 
     <aura:if isTrue="{!v.currentStep == 3}">
-        <!-- You had a typo here, correct attribute name is fieldsevent, not fieldsevent -->
-        <lightning:recordForm objectApiName="Event" fields="{!v.fieldsevent}" mode="edit" recordId="{!v.recordId}"/>
+        <lightning:input label="Event Name" value="{!v.fieldsevent.Name}"/>
+        <lightning:input type="datetime" label="Event Date" value="{!v.fieldsevent.StartDateTime}"/>
+        <lightning:input label="Event Subject" value="{!v.fieldsevent.Subject}"/>
         <lightning:button variant="brand" label="Save" onclick="{!c.createEvent}"/>
     </aura:if>
-
-    <!-- Previous button should be disabled on the first step -->
     <lightning:button label="Previous" onclick="{!c.previousStep}" disabled="{!v.currentStep == 1}"/>
-    <!-- Next button should be disabled on the last step -->
+    <lightning:button label="Next" onclick="{!c.nextStep}" disabled="{!v.currentStep == 3}"/>
+</aura:component> -->
+
+
+<aura:component controller="CreateAccount" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable" access="global">
+    <aura:attribute name="currentStep" type="Integer" default="1"/>
+    <aura:attribute name='fields' type='String[]' default="['Name','Email__c','ExternalId__c']"/>
+    <aura:attribute name='fieldscon' type='String[]' default="['AccountId','LastName']"/>
+    <aura:attribute name="fieldsevent" type="Map" default="{'WhoId':'', 'Subject':'', 'StartDateTime':'', 'EndDateTime':''}"/>
+    <aura:attribute name="eventDetails" type="Object" default="{}"/>
+    <aura:attribute name="contactId" type="Id" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <lightning:progressIndicator currentStep="{!v.currentStep}" type="path" variant="base">
+        <lightning:progressStep label="Account Details" value="1"/>
+        <lightning:progressStep label="Contact Details" value="2"/>
+        <lightning:progressStep label="Event Creation" value="3"/>
+    </lightning:progressIndicator>
+
+    <aura:if isTrue="{!v.currentStep == 1}">
+        <lightning:recordForm objectApiName="Account" fields="{!v.fields}" mode="edit"/>
+    </aura:if>
+
+    <aura:if isTrue="{!v.currentStep == 2}">
+        <lightning:recordForm objectApiName="Contact" fields="{!v.fieldscon}" mode="edit"/>
+    </aura:if>
+
+    <aura:if isTrue="{!v.currentStep == 3}">
+        <lightning:input label="Event Name" value="{!v.fieldsevent.Name}"/>
+        <lightning:input type="datetime" label="Event Start Date" value="{!v.fieldsevent.StartDateTime}"/>
+        <lightning:input type="datetime" label="Event End Date" value="{!v.fieldsevent.EndDateTime}"/>
+        <lightning:input label="Event Subject" value="{!v.fieldsevent.Subject}"/>
+        <lightning:button variant="brand" label="Save" onclick="{!c.createEvent}"/>
+    </aura:if>
+    <lightning:button label="Previous" onclick="{!c.previousStep}" disabled="{!v.currentStep == 1}"/>
     <lightning:button label="Next" onclick="{!c.nextStep}" disabled="{!v.currentStep == 3}"/>
 </aura:component>
