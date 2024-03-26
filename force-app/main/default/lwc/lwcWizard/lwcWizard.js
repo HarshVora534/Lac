@@ -16,16 +16,19 @@ export default class LwcWizard extends LightningElement {
 
     columns = [
         {label: 'Name', fieldName: 'Name'},
-        {label: 'Email', fieldName: 'Email', type:'email'}
-    ];
+        {label: 'Email', fieldName: this.selectedObject === 'Account' ? 'Email__c' : 'Email', type:'email'}
+    ];    
 
     handleObjectChange(event) {
         this.selectedObject = event.detail.value;
+        console.log(this.selectedObject);
         this.fetchObjectRecords();
+        // console.log(this.fetchObjectRecords)
     }
 
     async fetchObjectRecords() {
         this.objectRecords = await getObjectRecords({ objectName: this.selectedObject });
+        console.log(this.objectRecords);
     }
 
     handleRowSelection(event) {
@@ -65,9 +68,13 @@ export default class LwcWizard extends LightningElement {
     handleEmailDraft(event)
     {
         this.emailDraft=event.detail.value;
+        console.log(this.emailDraft);
     }
     async handleSendEmail(event) {
         await sendEmail({ records: JSON.stringify(this.selectedRecords), emailBody: this.emailDraft });
+        console.log(sendEmail);
     }
+
+    
     
 }

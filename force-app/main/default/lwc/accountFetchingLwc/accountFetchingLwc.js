@@ -26,8 +26,8 @@
 
 import { LightningElement, wire, track } from 'lwc';
 import { publish, MessageContext } from 'lightning/messageService';
-import ACCOUNT_SELECTED_MESSAGE from '@salesforce/messageChannels/Account_Selected__c';
-import getAllAcc from '@salesforce/apex/lwcAccountFetching.getAllAcc';
+import msgService from '@salesforce/messageChannel/messageChannelName__c'; // Replace with actual message channel name
+import getAllAcc from '@salesforce/apex/lwcAccountFetching.getAllAcc'; // Replace with actual Apex method
 
 export default class AccountFetchingLwc extends LightningElement {
     @track selectedAccountId;
@@ -48,12 +48,12 @@ export default class AccountFetchingLwc extends LightningElement {
             console.error('Error retrieving accounts:', error);
         }
     }
-
     handleChange(event) {
         this.selectedAccountId = event.detail.value;
+        console.log(this.selectedAccountId);
         const message = {
-            recordId: this.selectedAccountId
+            recordId: this.selectedAccountId 
         };
-        publish(this.messageContext, ACCOUNT_SELECTED_MESSAGE, message);
+        publish(this.messageContext, msgService, message);
     }
 }

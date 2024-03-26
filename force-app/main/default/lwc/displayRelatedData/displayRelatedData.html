@@ -1,16 +1,41 @@
-<template>
+<!-- <template>
     <lightning-card title="Related Data" variant="Narrow">
         <div class="slds-p-around_medium">
-            <template if:true={relatedContacts.data}>
+            <template if:true={relatedContacts}>
                 <template for:each={relatedContacts.data} for:item="contact">
-                    <p key={contact.Id}>{contact.Name}</p>
+                    <p key={contact.Id}>Contact's Data:- <br>{contact.Name}</p>
                 </template>
             </template>
-            <template if:true={relatedOpportunities.data}>
+            <template if:true={relatedOpportunities}>
                 <template for:each={relatedOpportunities.data} for:item="opportunity">
-                    <p key={opportunity.Id}>{opportunity.Name}</p>
+                    <p key={opportunity.Id}>Opportunity Data:- <br>{opportunity.Name}</p>
                 </template>
             </template>
         </div>
     </lightning-card>
+</template> -->
+<template>
+    <div style="border: 5px solid BLack;">
+        <div style="text-align: center; font-weight:bolder;background-color:white">LWC (Task 4) DropDown Child Component </div>
+    <lightning-card title="Related Data" variant="Narrow">
+        <div class="slds-p-around_medium" style="display:flex;justify-content:space-around;">
+            <div>
+                <template if:true={relatedContacts}>
+                    <p><b>Contact Data:-</b></p>
+                    <template for:each={relatedContacts} for:item="contact">
+                        <p key={contact.Id}><br>{contact.Name}</p>
+                    </template>
+                </template>
+            </div>
+            <div>
+            <template if:true={relatedOpportunities}>
+                <p><b>Opportunity Data:-</b></p>
+                <template for:each={relatedOpportunities} for:item="opportunity">
+                    <p key={opportunity.Id}><br>{opportunity.Name}</p>
+                </template>
+            </template>
+        </div>
+        </div>
+    </lightning-card>
+    </div>
 </template>

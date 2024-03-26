@@ -1,48 +1,6 @@
-<!-- <template>
-    <lightning-card title="Search Object Related data">
-        <lightning-layout>
-            <lightning-layout-item padding="around-small" size="6">
-                <div>
-                <lightning-dual-listbox label="Search Objects related Data" 
-                                        value={selectedObjects} 
-                                        options={objectOptions} 
-                                        source-label="Available" 
-                                        selected-label="Selected" 
-                                        onchange={handleObjectSelection}>
-                </lightning-dual-listbox>
-                </div>
-            </lightning-layout-item>
-
-            <lightning-layout-item padding="around-small" size="6">
-                <lightning-input type="search"
-                                 label="Search here"
-                                 value={selectedFeilds}
-                                 onchange={handleSearchTermChange}
-                                 is-loading>
-                </lightning-input>
-                <lightning-button label="search"
-                                  variant="brand"
-                                  onclick={handleSearch}>
-                </lightning-button>
-            </lightning-layout-item>
-        </lightning-layout> 
-        
-        <template if:true={searchResults}>
-            <div class="slds-p-around_medium">
-                <template for:each={searchResults} for:item="result">
-                    <lightning-card key={result.Id} title={result.Name}>
-                        <div class="slds-p-horizontal_small">
-                            <p>Object: {result.attributes.type}</p> 
-                            <p>Record ID: {result.Id}</p>
-                        </div>
-                    </lightning-card>
-                </template>
-            </div>
-        </template>
-    </lightning-card>
-</template> -->
-
 <template>
+    <div style="border: 5px solid BLack;">
+    <div style="text-align: center; font-weight:bolder;background-color:white">LWC (Task 6) SearchObject</div>    
     <lightning-card title="Search Object Related data">
         <lightning-layout>
             <lightning-layout-item padding="around-small" size="6">
@@ -68,24 +26,76 @@
                                   onclick={handleSearch}>
                 </lightning-button>
                 
-                <template if:true={searchResults}>
-                    <div class="slds-p-around_medium">
-                        <template for:each={searchResults} for:item="result">
-                            <lightning-card key={result.Id} title={result.Name}>
-                                <div class="slds-p-horizontal_small">
-                                    <template if:true={result.type}>
-                                        <p>Object: {result.type}</p> 
-                                    </template>
-                                    <p>Record ID: {result.Id}</p>
-                                    <!-- Display the Name field -->
-                                    <p>Name: {result.Name}</p>
-                                </div>
-                            </lightning-card>
-                        </template>
+                <!-- <template for:each={searchResults} for:item="result"> -->
+                    <!-- key={result.id} -->
+                    <div class="slds-p-around_medium" >
+                        <p><b>{firstObject}</b>: <br> {firstSearchTerm}</p>
+                        <br>
+                        <p><b>{secondObject}</b>: <br> {secondSearchTerm}</p>
+                        <br>
+                        <p><b>{thirdObject}</b>: <br> {thirdSearchTerm}</p>
                     </div>
-                </template>
+                <!-- </template> -->
+                
 
+                <!-- <template for:each={searchResults} for:item="result">
+                    <lightning-card key={result.Id} title={result.Name}>
+                        <div class="slds-p-horizontal_small">
+                            <template if:true={result.type}>
+                                <p>Object: {result.type}</p> 
+                            </template>
+                            <p>Record ID: {result.Id}</p> -->
+                            <!-- Display the Name field -->
+                            <!-- <p>Name: {result.Name}</p>
+                        </div>
+                    </lightning-card>
+                </template>
+                 -->
             </lightning-layout-item>
         </lightning-layout> 
     </lightning-card>
+    </div>
 </template>
+
+<!-- <template>
+    <div style="border: 5px solid black;">
+        <div style="text-align: center; font-weight: bolder; background-color: white;">LWC (Task 6) SearchObject</div>
+        <lightning-card title="Search Object Related data">
+            <lightning-layout>
+                <lightning-layout-item padding="around-small" size="6">
+                    <div>
+                        <lightning-dual-listbox label="Search Objects related Data" 
+                                                value={selectedObjects} 
+                                                options={objectOptions} 
+                                                source-label="Available" 
+                                                selected-label="Selected" 
+                                                onchange={handleObjectSelection}>
+                        </lightning-dual-listbox>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input type="search"
+                                     label="Search here"
+                                     value={searchTerm}
+                                     onchange={handleSearchTermChange}>
+                    </lightning-input>
+                    <lightning-button label="Search"
+                                      variant="brand"
+                                      onclick={handleSearch}>
+                    </lightning-button>
+                    
+                    <template for:each={searchResults} for:item="result">
+                        <div class="slds-p-around_medium" key={result.Id}>
+                            <template for:each={selectedObjects} for:item="object">
+                                <p key={result.Id + object}>{object}: <br> {result[object]}</p>
+                                <br/>
+                            </template>
+                        </div>
+                    </template>
+                    
+                </lightning-layout-item>
+            </lightning-layout> 
+        </lightning-card>
+    </div>
+</template> -->

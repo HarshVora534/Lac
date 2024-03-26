@@ -1,8 +1,8 @@
 import { LightningElement, wire, api } from 'lwc';
 import { subscribe, MessageContext } from 'lightning/messageService';
-import ACCOUNT_SELECTED_MESSAGE from '@salesforce/messageChannel/AccountSelected__c';
-import getRelatedContacts from '@salesforce/apex/lwcAccountFetching.getAllCon';
-import getRelatedOpportunities from '@salesforce/apex/lwcAccountFetching.getAllOpp';
+import msgService from '@salesforce/messageChannel/messageChannelName__c'; // Replace with actual message channel name
+import getRelatedContacts from '@salesforce/apex/lwcAccountFetching.getAllCon'; // Replace with actual Apex method
+import getRelatedOpportunities from '@salesforce/apex/lwcAccountFetching.getAllOpp'; // Replace with actual Apex method
 
 export default class DisplayRelatedData extends LightningElement {
     @api recordId;
@@ -18,7 +18,7 @@ export default class DisplayRelatedData extends LightningElement {
     subscribeToMessageChannel() {
         this.subscription = subscribe(
             this.messageContext,
-            ACCOUNT_SELECTED_MESSAGE,
+            msgService,
             (message) => {
                 this.handleMessage(message);
             }
@@ -27,13 +27,22 @@ export default class DisplayRelatedData extends LightningElement {
 
     handleMessage(message) {
         this.recordId = message.recordId;
+        console.log(this.recordId);
         if (this.recordId) {
             this.loadRelatedData();
         }
     }
 
-    loadRelatedData() {
-        this.relatedContacts = getRelatedContacts({ accountId: this.recordId });
-        this.relatedOpportunities = getRelatedOpportunities({ accountId: this.recordId });
+    async loadRelatedData() {
+        try 
+        {
+            this.relatedContacts = await getRelatedContacts({ accountId : this.recordId });
+            console.log(this.relatedContacts);
+            this.relatedOpportunities = await getRelatedOpportunities({ accountId: this.recordId });
+            console.log(this.relatedOpportunities);
+        } 
+        catch(error) {
+            console.error('Error loading related data:', error);
+        }
     }
 }

@@ -1,0 +1,10 @@
+<apex:page>
+    <apex:form id="emailForm">
+        <apex:inputText value="{!contactEmail}" label="To"/>
+        <apex:inputText value="{!emailSubject}" label="Subject"/>
+        <apex:inputTextarea value="{!emailBody}" label="Body"/>
+        <apex:inputFile value="{!attachment}" filename="{!attachmentName}"/>
+
+        <apex:commandButton value="Send" action="{!sendEmail}" rerender="emailForm"/>
+    </apex:form>
+</apex:page>
