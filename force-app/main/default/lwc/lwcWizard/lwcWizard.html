@@ -1,4 +1,6 @@
 <template>
+    <div style="border: 5px solid BLack;">
+    <div style="text-align: center; font-weight:bolder;background-color:white">LWC (Task 5) Sending Email on Selected Record</div>        
     <template if:true={OneVisible}> 
         <lightning-combobox label="Select Object" 
                             options={objectOptions} 
@@ -18,7 +20,7 @@
     </template> 
 
     <template if:true={twoVisible}> 
-        <textarea name="emailBody" onchange={handleEmailDraft}></textarea>
+        <lightning-input label="Email Draft" onchange={handleEmailDraft}></lightning-input>
         <lightning-button-group>
             <lightning-button label="Previous" onclick={handlePrevious}></lightning-button>
             <lightning-button label="Next" onclick={handleNext}></lightning-button>
@@ -32,5 +34,6 @@
             <lightning-button label="Send Email" onclick={handleSendEmail}></lightning-button>
         </lightning-button-group>
     </template>
+    </div>
 </template>
     

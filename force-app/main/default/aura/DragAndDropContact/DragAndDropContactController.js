@@ -149,6 +149,7 @@
                     }
                     console.log('-->',contacts);
                     component.set("v.contacts", contacts);
+                    debugger
                     
                     // Refresh the view
                     $A.get('e.force:refreshView').fire();

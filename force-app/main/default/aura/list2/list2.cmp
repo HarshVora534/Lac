@@ -7,17 +7,14 @@
     
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
     
-    <!-- Search Bar -->
     <lightning:input type="search" label="Search Contacts" value="{!v.searchTerm}" onchange="{!c.handleSearch}"/>
     
-    <!-- Contact List -->
     <ul>
         <aura:iteration items="{!v.contacts}" var="contact" start="{!((v.currentPage - 1) * v.pageSize) + 1}" end="{!v.currentPage * v.pageSize}">
             <li>{!contact.Name}</li>
         </aura:iteration>
     </ul>
     
-    <!-- Pagination -->
     <lightning:buttonGroup>
         <lightning:button label="Previous" disabled="{!v.currentPage === 1}" onclick="{!c.previousPage}"/>
         <lightning:button label="Next" disabled="{!v.contacts.length < v.pageSize}" onclick="{!c.nextPage}"/>

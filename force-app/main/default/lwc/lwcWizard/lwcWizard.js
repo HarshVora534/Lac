@@ -23,7 +23,6 @@ export default class LwcWizard extends LightningElement {
         this.selectedObject = event.detail.value;
         console.log(this.selectedObject);
         this.fetchObjectRecords();
-        // console.log(this.fetchObjectRecords)
     }
 
     async fetchObjectRecords() {
@@ -33,6 +32,7 @@ export default class LwcWizard extends LightningElement {
 
     handleRowSelection(event) {
         this.selectedRecords = event.detail.selectedRows;
+        console.log(this.selectedRecords);
     }
     handleNext()
     {
@@ -65,16 +65,28 @@ export default class LwcWizard extends LightningElement {
             this.disablePrevious=true;
         }
     }
-    handleEmailDraft(event)
-    {
-        this.emailDraft=event.detail.value;
-        console.log(this.emailDraft);
+    handleEmailDraft(event) {
+        try {
+            this.emailDraft = event.detail.value;
+            console.log("Email Draft Value:", this.emailDraft);
+        } catch(error) {
+            console.error("Error handling email draft:", error);
+        }
     }
+    
     async handleSendEmail(event) {
-        await sendEmail({ records: JSON.stringify(this.selectedRecords), emailBody: this.emailDraft });
+        await sendEmail({ records: this.selectedRecords, emailBody: this.emailDraft });
         console.log(sendEmail);
     }
-
-    
-    
+        
 }
+
+
+
+
+
+
+
+
+
+
