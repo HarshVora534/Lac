@@ -56,7 +56,9 @@ export default class recordEditForm extends LightningElement {
         let values = {};
         this.fields.forEach(field => {
             values[field] = this.formData[field] || '';
+            console.log(values[field]);
         });
+        console.log(values);
         return values;
     }
 

@@ -1,4 +1,4 @@
-<aura:component implements="force:appHostable">
+<aura:component implements="lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable">
     <aura:attribute name='fields' type='String[]' default="['FirstName','LastName','Phone']"></aura:attribute>
     <lightning:recordForm objectApiName="Contact" fields="{!v.fields}" onsuccess="{!c.recordController}"></lightning:recordForm>
 </aura:component>
