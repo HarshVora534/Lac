@@ -1,0 +1,9 @@
+.button{
+    display: flex;
+    justify-content: space-between;
+}
+.button1{
+    display: flex;
+    gap: 10px;
+}
+

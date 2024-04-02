@@ -1,19 +1,20 @@
 <template>
     <lightning-card>
-        <h1><b>Integration Gmail service with Salesforce</b></h1>
+        <div class="slds-page-header slds-p-left_x-small slds-text-title_bold">Integration Gmail service with Salesforce</div>
         <br>
-    <lightning-button type="submit" label="Send Email" onclick={handleSubmit}></lightning-button>
+        <lightning-button class="slds-p-left_x-small" variant="brand" type="submit" label="Send Email" onclick={handleSubmit}></lightning-button>
     </lightning-card>
+
     <template if:true={modalVisible}>
 
         <lightning-modal-body>
 
-            <lightning-input type="text"  placeholder="Subject..." style="padding-bottom: 10px;"></lightning-input>
+            <lightning-input type="text" value={input}  placeholder="Subject..." style="padding-bottom: 10px;" onchange={inputChange}></lightning-input>
 
             <lightning-input-rich-text
                 formats="font, bold, italic, underline, strike, list, indent, align,
                 link, image, clean, code, code-block, color, background, mention, header"
-                value="">
+                value={text} onchange={textChange}>
             </lightning-input-rich-text>
 
             <lightning-file-upload label="Attachments" accept={acceptedFormats} record-id={contactId} onuploadfinished={handleUploadFinished}></lightning-file-upload>
@@ -26,3 +27,4 @@
     </template>
     
 </template>
+<!-- onchange={fileChange} value={file} -->

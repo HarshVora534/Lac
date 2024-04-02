@@ -1,0 +1,8 @@
+.flexContainer{
+    display:flex;
+    justify-content: space-between;
+}
+.flexElement{
+    display: flex;
+    gap: 10px;
+}

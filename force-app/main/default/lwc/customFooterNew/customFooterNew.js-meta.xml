@@ -7,9 +7,9 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="showPrevious" type="Boolean" label="Show Previous Button" default="false"/>
-            <property name="showNext" type="Boolean" label="Show Next Button" default="false"/>
-            <property name="showFinish" type="Boolean" label="Show Finish Button" default="false"/>
+            <property name="showNext" label="Show Next Button" type="Boolean" default="false"/>
+            <property name="showPrevious" label="Show Previous Button" type="Boolean" default="false"/>
+            <property name="showFinish" label="Show Finish Button" type="Boolean" default="false"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
