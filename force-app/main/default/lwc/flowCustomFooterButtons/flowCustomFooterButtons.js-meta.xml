@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="text" type="String" label="Displaying Text"/>
+            <property name="showPrevious" type="Boolean" label="Show Previous Button" default="false"/>
+            <property name="showNext" type="Boolean" label="Show Next Button" default="false"/>
+            <property name="showSave" type="Boolean" label="Show Finish Button" default="false"/>
+            <property name="disablePrevious" type="Boolean" label="Disable Previous Button" default="false"/>
+            <property name="disableNext" type="Boolean" label="Disable Next Button" default="True"/>
+            <property name="disableSave" type="Boolean" label="Disable Finish Button" default="false"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

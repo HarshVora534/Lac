@@ -1,0 +1,40 @@
+<!-- Task Assigned :- Custom Footer -->
+
+<template>
+        <template if:true={currentStep}>
+            <div>
+                <template if:true={isFirstStep}>
+                    <p>Step 1: First Section Content</p>
+                    <lightning-input type="text" value={firstStep} onchange={handleFirstInputChange} class="slds-p-top_small"></lightning-input>
+                    <div class="slds-p-around_small">
+                        <lightning-button-group>
+                        <lightning-button label="Previous" variant="brand" disabled="true"></lightning-button>
+                        <lightning-button label="Next" class="slds-p-left_x-small" variant="brand" disabled={isNextDisabled} onclick={nextStep}></lightning-button>
+                        </lightning-button-group>
+                    </div>
+                </template>
+                <template if:true={isSecondStep}>
+                    <p>Step 2: Second Section Content</p>
+                    <lightning-input type="text" value={secondStep} onchange={handleSecondInputChange} class="slds-p-top_small"></lightning-input>
+                    <div class="slds-p-around_small">
+                        <lightning-button-group>
+                        <lightning-button label="Previous" variant="brand" disabled={isPreviousDisabled} onclick={previousStep}></lightning-button>
+                        <lightning-button label="Next" class="slds-p-left_x-small" variant="brand" onclick={nextStep} disabled={secondDisable}></lightning-button>
+                        </lightning-button-group>
+                    </div>
+                </template>
+                <template if:true={isThirdStep}>
+                    <p>Step 3: Third Section Content</p>
+                    <lightning-input type="text" value={thirdStep} onchange={handleThirdInputChange} class="slds-p-top_small"></lightning-input>
+                    <div class="slds-p-around_small">
+                        <lightning-button-group>
+                            <lightning-button label="Previous" variant="brand" onclick={previousStep}></lightning-button>
+                            <!-- <lightning-button label="Next" class="slds-p-left_x-small" variant="brand" disabled="true"></lightning-button> -->
+                        </lightning-button-group>
+                        <lightning-button label="Finish" variant="brand" disabled={isFinishDisabled} onclick={finish} class="slds-float_right"></lightning-button>
+                    </div>
+                </template>
+            </div>
+        </template>
+</template>
+

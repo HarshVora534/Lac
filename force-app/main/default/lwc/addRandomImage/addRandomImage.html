@@ -1,5 +1,17 @@
-<template>
+<!-- <template>
     <lightning-card>
         <lightning-button type="Save" variant="Brand" name="Save" onclick={addRandomImage}></lightning-button>
+    </lightning-card>
+</template> -->
+
+<template>
+    <lightning-card title="Add Random Image">
+        <lightning-button variant="Brand" onclick={addRandomImage}></lightning-button>
+        <template if:true={imageURL}>
+            <img src={imageURL} alt="Random Image" style="max-width: 100%; max-height: 300px;" />
+        </template>
+        <template if:false={imageURL}>
+            <p>No image available</p>
+        </template>
     </lightning-card>
 </template>

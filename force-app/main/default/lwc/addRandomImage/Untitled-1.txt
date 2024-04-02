@@ -1,0 +1,4 @@
+Modification:-
+
+in selecting record and sending mail task eamil is only been send for contact records.
+Drag and Drop task parent ID updation

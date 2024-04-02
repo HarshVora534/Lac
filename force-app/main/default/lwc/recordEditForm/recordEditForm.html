@@ -1,32 +1,15 @@
-<!-- <template>
-    <lightning-card title="Dynamic Record Edit Form">
-        <lightning-record-edit-form object-api-name={objectApiName} record-id={recordId} onsuccess={handleSuccess}>
-            <template for:each={fields} for:item="field">
-                <lightning-input-field key={field} field-name={field} value={value} required></lightning-input-field>
-            </template>
-            <lightning-button variant="brand" label="Next" class="slds-float_right" style="padding-bottom: 10px;padding-right:5px" onclick={handleNext}></lightning-button>
-        </lightning-record-edit-form>
-    </lightning-card>
-</template>  -->
-
 <template>
     <lightning-card title="Dynamic Record Edit Form">
         <lightning-record-edit-form object-api-name={objectApiName} record-id={recordId} onsuccess={handleSuccess}>
-            <template for:each={fields} for:item="fieldApiName">
-                <lightning-input-field key={fieldApiName} field-name={fieldApiName} onchange={handleFieldChange}></lightning-input-field>
+            <template for:each={fields} for:item="field">
+                <lightning-input-field onchange={handleFieldChange} key={field} field-name={field} value={value} required></lightning-input-field>
             </template>
-           </lightning-record-edit-form>
+
+            <lightning-button
+                disabled={isDisabled}
+                type="submit"
+                label="Save & Next" class="slds-float_right buttonCls"  onclick={handleNext}
+            ></lightning-button>
+        </lightning-record-edit-form>
     </lightning-card>
-    <lightning-modal-footer>
-        <lightning-button
-        class="slds-button slds-float_right"
-        variant="brand"
-        label="Next"
-        onclick={handleNext}>
-    </lightning-button>
-    </lightning-modal-footer>
-</template> 
-
-<!-- slds-m-left_x-small -->
-
-<!-- value={fieldValues[fieldApiName]} -->
+</template>

@@ -2,6 +2,27 @@
     <lightning-card>
         <h1><b>Integration Gmail service with Salesforce</b></h1>
         <br>
-    <lightning-button type="submit" label="Send Email"></lightning-button>
+    <lightning-button type="submit" label="Send Email" onclick={handleSubmit}></lightning-button>
     </lightning-card>
+    <template if:true={modalVisible}>
+
+        <lightning-modal-body>
+
+            <lightning-input type="text"  placeholder="Subject..." style="padding-bottom: 10px;"></lightning-input>
+
+            <lightning-input-rich-text
+                formats="font, bold, italic, underline, strike, list, indent, align,
+                link, image, clean, code, code-block, color, background, mention, header"
+                value="">
+            </lightning-input-rich-text>
+
+            <lightning-file-upload label="Attachments" accept={acceptedFormats} record-id={contactId} onuploadfinished={handleUploadFinished}></lightning-file-upload>
+
+        </lightning-modal-body>
+
+        <lightning-modal-footer>
+        <lightning-button label="Send" onclick={handleSend}></lightning-button>
+        </lightning-modal-footer>
+    </template>
+    
 </template>
