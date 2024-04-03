@@ -17,7 +17,7 @@
                 value={text} onchange={textChange}>
             </lightning-input-rich-text>
 
-            <lightning-file-upload label="Attachments" accept={acceptedFormats} record-id={contactId} onuploadfinished={handleUploadFinished}></lightning-file-upload>
+            <lightning-file-upload label="Attachments" accept={acceptedFormats} record-id={contactId} onuploadfinished={handleUploadFinished} multiple></lightning-file-upload>
 
         </lightning-modal-body>
 
@@ -27,4 +27,3 @@
     </template>
     
 </template>
-<!-- onchange={fileChange} value={file} -->
