@@ -2,7 +2,7 @@ public class GoogleMapComponent {
     public static void GoogleMapComponent() {
         Http http = new Http();
         HttpRequest req = new HttpRequest();
-        req.setEndpoint('https://maps.googleapis.com/maps/api/js?key=AIzaSyDmxa0XmQaxvLCOOdc0rUhzUxEEbSPgtJs&callback=initMap');
+        req.setEndpoint('https://maps.googleapis.com/maps/api/js?key=&callback=initMap');
         req.setMethod('GET');
         try{
             HTTPResponse res = http.send(req);
