@@ -1,0 +1,7 @@
+<!-- PDFRenderer.page -->
+<apex:page controller="AccountPDFController" renderAs="pdf">
+    <apex:repeat  var="">
+        <!-- {!pdfContent} -->
+        <br/>
+    </apex:repeat>
+</apex:page>

@@ -1,0 +1,13 @@
+<!-- PDFRenderer.page
+<apex:page controller="AccountPDFController" renderAs="pdf">
+    <apex:repeat value="{!generatePDFContent}" var="pdfContent">
+        {!pdfContent}
+        <br/>
+    </apex:repeat>
+</apex:page> -->
+<apex:page></apex:page>
+
+<!-- <apex:page standardController="Account" extensions="AccountPDFController" renderAs="pdf">
+    <apex:outputText>Hello</apex:outputText>
+</apex:page>
+ -->

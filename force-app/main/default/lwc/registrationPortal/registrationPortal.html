@@ -1,0 +1,79 @@
+<!-- <template>
+    <lightning-card title="User Registration">
+        <div class="slds-p-around_medium">
+            <lightning-combobox label="Select User Type" value={selectedUserType} options={userOptions} onchange={handleUserTypeChange}></lightning-combobox>
+            <lightning-input label="Name" type="text" value={name} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Email" type="email" value={email} onchange={handleInputChange}></lightning-input>
+            <template if:true={isTeacher}>
+                <lightning-input label="Subject Taught" type="text" value={subjectTaught} onchange={handleInputChange}></lightning-input>
+                <lightning-input label="Experience" type="number" value={experience} onchange={handleInputChange}></lightning-input>
+            </template>
+            <template if:true={isStudent}>
+                <lightning-input label="Grade Level" type="text" value={gradeLevel} onchange={handleInputChange}></lightning-input>
+                <lightning-input label="School" type="text" value={school} onchange={handleInputChange}></lightning-input>
+            </template>
+            <div class="slds-m-top_medium">
+                <lightning-button label="Register" onclick={handleRegister}></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template> -->
+
+
+<!-- registrationPortal.html -->
+<!-- registrationPortal.html -->
+<!-- <template>
+    <lightning-card title="User Registration">
+        <div class="slds-p-around_medium">
+            <lightning-radio-group label="Select User Type" value={selectedUserType} options={userOptions} onchange={handleUserTypeChange}></lightning-radio-group>
+            <template if:true={isTeacher}>
+                <lightning-record-edit-form object-api-name="Teacher__c" onsuccess={handleSuccess} onerror={handleError}>
+                    <lightning-messages></lightning-messages>
+                    <lightning-input-field field-name="Name"></lightning-input-field>
+                    <lightning-input-field field-name="Email__c"></lightning-input-field>
+                    <lightning-input-field field-name="Subject_Taught__c"></lightning-input-field>
+                    <lightning-input-field field-name="Experience__c"></lightning-input-field>
+                    <div class="slds-m-top_medium">
+                        <lightning-button label="Register" onclick={handleRegister}></lightning-button>
+                    </div>
+                </lightning-record-edit-form>
+            </template>
+            <template if:true={isStudent}>
+                <lightning-record-edit-form object-api-name="Student__c" onsuccess={handleSuccess} onerror={handleError}>
+                    <lightning-messages></lightning-messages>
+                    <lightning-input-field field-name="Name"></lightning-input-field>
+                    <lightning-input-field field-name="Email__c"></lightning-input-field>
+                    <lightning-input-field field-name="Grade_Level__c"></lightning-input-field>
+                    <lightning-input-field field-name="School__c"></lightning-input-field>
+                    <div class="slds-m-top_medium">
+                        <lightning-button label="Register" onclick={handleRegister}></lightning-button>
+                    </div>
+                </lightning-record-edit-form>
+            </template>
+        </div>
+    </lightning-card>
+</template> -->
+<template>
+    <div>
+        <lightning-radio-group name="recordType" options={options} value={selectedRecordType} onchange={handleChange}></lightning-radio-group>
+        
+        <template if:true={isStudent}>
+            <div style="border: 5px solid black;">
+                <div style="text-align: center; font-weight: bolder; background-color: white;">Student Registration Form</div>    
+                <lightning-card title="Record with Field Integrity" icon-name="standard:account">
+                    <lightning-record-form object-api-name={studentObjectApiName} fields={studentFields} mode="edit" onsubmit={handleSubmit}></lightning-record-form>
+                </lightning-card>
+            </div>
+        </template>
+
+        <template if:true={isTeacher}>
+            <div style="border: 5px solid black;">
+                <div style="text-align: center; font-weight: bolder; background-color: white;">Teacher Registration Form</div>    
+                <lightning-card title="Record with Field Integrity" icon-name="standard:account">
+                    <lightning-record-form object-api-name={teacherObjectApiName} fields={teacherFields} mode="edit" onsubmit={handleSubmit}></lightning-record-form>
+                </lightning-card>
+            </div>
+        </template>
+    </div>
+</template>
+

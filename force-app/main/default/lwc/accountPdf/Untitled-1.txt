@@ -1,0 +1,15 @@
+<apex:page standardController="Account" renderAs="pdf" applyBodyTag="false">
+    <head>
+        <style type="text/css">
+            body { font-family: Arial Unicode MS; }
+        </style>
+    </head>
+    <h1>Account Information</h1>
+    <apex:panelGrid columns="2" border="1" cellspacing="0" cellPadding="5" width="100%">
+        <apex:outputText value="{!$ObjectType.Account.fields.Name.label}" />
+        <apex:outputText value="{!Account.Name}" />
+        <apex:outputText value="{!$ObjectType.Account.fields.Email__c.label}" />
+        <apex:outputText value="{!Account.Email__c}" />
+        <!-- Add more fields as needed -->
+    </apex:panelGrid>
+</apex:page>
